@@ -1,4 +1,4 @@
-plicación Android desarrollada en Java con Android Studio.
+Aplicación Android desarrollada en Java con Android Studio.
 
 Funciones:
 - Login y registro
