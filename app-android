@@ -1,5 +1,7 @@
-Incluye:
-- Diagramas
-- Memoria del proyecto
-- Capturas
-- Esquemas
+plicación Android desarrollada en Java con Android Studio.
+
+Funciones:
+- Login y registro
+- Visualización de trayectos
+- Chat
+- Notificaciones push
