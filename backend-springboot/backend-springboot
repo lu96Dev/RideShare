@@ -1,1 +1,12 @@
 Backend Spring Boot del proyecto RideShare
+API REST para:
+- Autenticación
+- Gestión de usuarios
+- Trayectos
+- Mensajes (chat mediante polling)
+
+Tecnologías:
+- Java
+- Spring Boot
+- MySQL
+- JWT
