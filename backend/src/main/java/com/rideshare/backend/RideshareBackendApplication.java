@@ -1,4 +1,4 @@
-package com.rideshare.backend.Aplicacion;
+package com.rideshare.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
