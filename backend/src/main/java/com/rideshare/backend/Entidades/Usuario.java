@@ -1,4 +1,4 @@
-package com.rideshare.backend;
+package com.rideshare.backend.Entidades;
 
 public class Usuario {
     String id;
