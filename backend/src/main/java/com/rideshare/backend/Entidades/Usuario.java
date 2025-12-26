@@ -1,89 +1,61 @@
 package com.rideshare.backend.Entidades;
 
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "usuarios")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Usuario {
-    int id;
-    String nombre;
-    String email;
-    String password;
-    String telefono;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public Usuario(){
+    @Column(nullable = false, length = 100)
+    private String nombre;
 
-    }
+    @Column(nullable = false, length = 100)
+    private String apellidos;
 
+    @Column(nullable = false, unique = true, length = 150)
+    private String email;
 
-    public Usuario(int id, String telefono, String password, String email, String nombre) {
-        this.id = id;
-        this.telefono = telefono;
-        this.password = password;
-        this.email = email;
-        this.nombre = nombre;
-    }
+    @Column(length = 20)
+    private String telefono;
 
-    public void registrarse(){
+    @Column(nullable = false)
+    private String password;
 
-    }
+    @Column(name = "foto_perfil")
+    private String fotoPerfil;
 
-    public void publicarTrayecto(){
+    @Column(columnDefinition = "TEXT")
+    private String biografia;
 
-    }
+    @Column(name = "preferencias_viaje", columnDefinition = "TEXT")
+    private String preferenciasViaje;
 
-    public void participarChat(){
+    @Column(nullable = false)
+    private Boolean activo = true;
 
-    }
+    @Column(name = "email_verificado", nullable = false)
+    private Boolean emailVerificado = false;
 
-    public void borrarUsuario(){
+    @Column(name = "token_verificacion")
+    private String tokenVerificacion;
 
-    }
+    @Column(name = "fecha_registro", nullable = false, updatable = false)
+    private LocalDateTime fechaRegistro = LocalDateTime.now();
 
-    public String getTelefono() {
-        return telefono;
-    }
+    @Column(name = "fecha_actualizacion")
+    private LocalDateTime fechaActualizacion = LocalDateTime.now();
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", telefono='" + telefono + '\'' +
-                '}';
+    @PreUpdate
+    protected void onUpdate() {
+        fechaActualizacion = LocalDateTime.now();
     }
 }
