@@ -5,6 +5,119 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    android:background="@color/blue"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/textoRegister1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Introduce tu correo: "
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imagenLogoLogin"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        />
+
+    <EditText
+        android:id="@+id/editTextCorreo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Correo"
+        android:textColor="@color/black"
+        android:background="@drawable/caja_redonda"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/textoRegister1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textoRegister2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Introduce tu contraseña: "
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextCorreo" />
+
+    <EditText
+        android:id="@+id/editTextContraseña"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:textColor="@color/black"
+        android:background="@drawable/caja_redonda"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/textoRegister2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textoRegister3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Repite tu contraseña: "
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextContraseña" />
+
+    <EditText
+        android:id="@+id/editTextRepetirContraseña"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:textColor="@color/black"
+        android:background="@drawable/caja_redonda"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/textoRegister3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textoLogoLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RideShare"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/imagenLogoLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <Button
+        android:id="@+id/botonLoginMain"
+        android:layout_width="188dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="196dp"
+        android:text="Registrarse"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imagenLogoLogin" />
+
+    <ImageView
+        android:id="@+id/imagenLogoLogin"
+        android:layout_width="187dp"
+        android:layout_height="222dp"
+        android:src="@drawable/rideshare"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.141" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
