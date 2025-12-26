@@ -1,61 +1,67 @@
 package com.rideshare.backend.Entidades;
 
+import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "trayectos")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Trayecto {
-    String id;
-    String origen;
-    String destino;
-    String fechaHora;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public Trayecto(){
+    @Column(name = "conductor_id", nullable = false)
+    private Integer conductorId;
 
-    }
+    @Column(nullable = false)
+    private String origen;
 
-    public Trayecto(String fechaHora, String destino, String origen, String id) {
-        this.fechaHora = fechaHora;
-        this.destino = destino;
-        this.origen = origen;
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private String destino;
 
-    public String getId() {
-        return id;
-    }
+    @Column(name = "latitud_origen", precision = 10, scale = 8)
+    private BigDecimal latitudOrigen;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @Column(name = "longitud_origen", precision = 11, scale = 8)
+    private BigDecimal longitudOrigen;
 
-    public String getFechaHora() {
-        return fechaHora;
-    }
+    @Column(name = "latitud_destino", precision = 10, scale = 8)
+    private BigDecimal latitudDestino;
 
-    public void setFechaHora(String fechaHora) {
-        this.fechaHora = fechaHora;
-    }
+    @Column(name = "longitud_destino", precision = 11, scale = 8)
+    private BigDecimal longitudDestino;
 
-    public String getDestino() {
-        return destino;
-    }
+    @Column(nullable = false)
+    private LocalDate fecha;
 
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
+    @Column(nullable = false)
+    private LocalTime hora;
 
-    public String getOrigen() {
-        return origen;
-    }
+    @Column(name = "plazas_disponibles", nullable = false)
+    private Integer plazasDisponibles;
 
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
+    @Column(name = "plazas_totales", nullable = false)
+    private Integer plazasTotales;
 
-    @Override
-    public String toString() {
-        return "Trayecto{" +
-                "id='" + id + '\'' +
-                ", origen='" + origen + '\'' +
-                ", destino='" + destino + '\'' +
-                ", fechaHora='" + fechaHora + '\'' +
-                '}';
+    @Column(name = "costo_estimado", precision = 10, scale = 2)
+    private BigDecimal costoEstimado;
+
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
+
+    @Column(name = "fecha_actualizacion")
+    private LocalDateTime fechaActualizacion = LocalDateTime.now();
+
+    @PreUpdate
+    protected void onUpdate() {
+        fechaActualizacion = LocalDateTime.now();
     }
 }
