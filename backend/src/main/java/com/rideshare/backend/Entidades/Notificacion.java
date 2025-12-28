@@ -6,11 +6,14 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notificaciones")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = {"mensaje", "datos"})
 public class Notificacion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,16 +31,23 @@ public class Notificacion {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String mensaje;
 
-    @Column(name = "fecha_envio", nullable = false)
-    private LocalDateTime fechaEnvio = LocalDateTime.now();
+    @Column(name = "fecha_envio", nullable = false, updatable = false)
+    private LocalDateTime fechaEnvio;
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean leida = false;
 
     @Column(columnDefinition = "JSON")
     private String datos;
 
+    @PrePersist
+    protected void onCreate() {
+        fechaEnvio = LocalDateTime.now();
+    }
+
     public enum TipoNotificacion {
-        MENSAJE, RECORDATORIO
+        MENSAJE,
+        RECORDATORIO
     }
 }

@@ -9,11 +9,14 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "trayectos")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Trayecto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,18 +30,6 @@ public class Trayecto {
     @Column(nullable = false)
     private String destino;
 
-    @Column(name = "latitud_origen", precision = 10, scale = 8)
-    private BigDecimal latitudOrigen;
-
-    @Column(name = "longitud_origen", precision = 11, scale = 8)
-    private BigDecimal longitudOrigen;
-
-    @Column(name = "latitud_destino", precision = 10, scale = 8)
-    private BigDecimal latitudDestino;
-
-    @Column(name = "longitud_destino", precision = 11, scale = 8)
-    private BigDecimal longitudDestino;
-
     @Column(nullable = false)
     private LocalDate fecha;
 
@@ -51,14 +42,17 @@ public class Trayecto {
     @Column(name = "plazas_totales", nullable = false)
     private Integer plazasTotales;
 
-    @Column(name = "costo_estimado", precision = 10, scale = 2)
-    private BigDecimal costoEstimado;
-
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_actualizacion")
-    private LocalDateTime fechaActualizacion = LocalDateTime.now();
+    private LocalDateTime fechaActualizacion;
+
+    @PrePersist
+    protected void onCreate() {
+        fechaCreacion = LocalDateTime.now();
+        fechaActualizacion = LocalDateTime.now();
+    }
 
     @PreUpdate
     protected void onUpdate() {
