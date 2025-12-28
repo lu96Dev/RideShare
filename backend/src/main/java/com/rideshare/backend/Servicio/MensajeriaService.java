@@ -1,7 +1,7 @@
 package com.rideshare.backend.Servicio;
 
 import com.rideshare.backend.Entidades.Mensaje;
-import com.rideshare.backend.Repositorio.MensajeRepository;
+import com.rideshare.backend.Repositorio.MensajeriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MensajeriaService {
 
-    private final MensajeRepository mensajeRepository;
+    private final MensajeriaRepository mensajeRepository;
 
     @Transactional
     public Mensaje enviarMensaje(Mensaje mensaje) {

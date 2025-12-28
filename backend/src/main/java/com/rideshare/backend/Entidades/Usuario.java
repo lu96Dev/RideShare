@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "password")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,7 @@ public class Usuario {
     private String telefono;
 
     @Column(nullable = false)
+    @ToString.Exclude
     private String password;
 
     @Column(name = "foto_perfil")
@@ -39,9 +41,11 @@ public class Usuario {
     @Column(name = "preferencias_viaje", columnDefinition = "TEXT")
     private String preferenciasViaje;
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean activo = true;
 
+    @Builder.Default
     @Column(name = "email_verificado", nullable = false)
     private Boolean emailVerificado = false;
 
@@ -53,6 +57,12 @@ public class Usuario {
 
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion = LocalDateTime.now();
+
+    @PrePersist
+    protected void onCreate() {
+        fechaRegistro = LocalDateTime.now();
+        fechaActualizacion = LocalDateTime.now();
+    }
 
     @PreUpdate
     protected void onUpdate() {

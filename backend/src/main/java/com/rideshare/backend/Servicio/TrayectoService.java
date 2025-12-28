@@ -1,7 +1,6 @@
 package com.rideshare.backend.Servicio;
 
 import com.rideshare.backend.Entidades.Trayecto;
-import com.rideshare.backend.Entidades.Usuario;
 import com.rideshare.backend.Repositorio.TrayectoRepository;
 import com.rideshare.backend.Repositorio.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +19,17 @@ public class TrayectoService {
 
     @Transactional
     public Trayecto crearTrayecto(Trayecto trayecto, Integer conductorId) {
-        Usuario conductor = usuarioRepository.findById(conductorId)
+
+        usuarioRepository.findById(conductorId)
                 .orElseThrow(() -> new RuntimeException("Conductor no encontrado"));
+
         trayecto.setConductorId(conductorId);
         trayecto.setPlazasDisponibles(trayecto.getPlazasTotales());
+
         return trayectoRepository.save(trayecto);
     }
 
     public List<Trayecto> obtenerTrayectosDisponibles() {
-        return trayectoRepository.findByFechaAfterAndEstado(LocalDate.now(), "ACTIVO");
+        return trayectoRepository.findTrayectosDisponibles(LocalDate.now());
     }
 }
