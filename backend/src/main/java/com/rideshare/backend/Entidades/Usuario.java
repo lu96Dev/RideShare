@@ -6,11 +6,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "password")
+@ToString
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +32,7 @@ public class Usuario {
     @Column(nullable = false)
     @ToString.Exclude
     private String password;
+
 
     @Column(name = "foto_perfil")
     private String fotoPerfil;
