@@ -1,61 +1,61 @@
 package com.rideshare.backend.Entidades;
 
+import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "trayectos")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
 public class Trayecto {
-    String id;
-    String origen;
-    String destino;
-    String fechaHora;
 
-    public Trayecto(){
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
+    @Column(name = "conductor_id", nullable = false)
+    private Integer conductorId;
+
+    @Column(nullable = false)
+    private String origen;
+
+    @Column(nullable = false)
+    private String destino;
+
+    @Column(nullable = false)
+    private LocalDate fecha;
+
+    @Column(nullable = false)
+    private LocalTime hora;
+
+    @Column(name = "plazas_disponibles", nullable = false)
+    private Integer plazasDisponibles;
+
+    @Column(name = "plazas_totales", nullable = false)
+    private Integer plazasTotales;
+
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    @Column(name = "fecha_actualizacion")
+    private LocalDateTime fechaActualizacion;
+
+    @PrePersist
+    protected void onCreate() {
+        fechaCreacion = LocalDateTime.now();
+        fechaActualizacion = LocalDateTime.now();
     }
 
-    public Trayecto(String fechaHora, String destino, String origen, String id) {
-        this.fechaHora = fechaHora;
-        this.destino = destino;
-        this.origen = origen;
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(String fechaHora) {
-        this.fechaHora = fechaHora;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
-
-    public String getOrigen() {
-        return origen;
-    }
-
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
-
-    @Override
-    public String toString() {
-        return "Trayecto{" +
-                "id='" + id + '\'' +
-                ", origen='" + origen + '\'' +
-                ", destino='" + destino + '\'' +
-                ", fechaHora='" + fechaHora + '\'' +
-                '}';
+    @PreUpdate
+    protected void onUpdate() {
+        fechaActualizacion = LocalDateTime.now();
     }
 }

@@ -1,56 +1,36 @@
 package com.rideshare.backend.Entidades;
 
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "mensajes")
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Mensaje {
-    String id;
-    String texto;
-    String fechaHora;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public Mensaje(){
+    @Column(name = "remitente_id", nullable = false)
+    private Integer remitenteId;
 
-    }
-    public Mensaje(String id, String texto, String fechaHora) {
-        this.id = id;
-        this.texto = texto;
-        this.fechaHora = fechaHora;
-    }
+    @Column(name = "destinatario_id", nullable = false)
+    private Integer destinatarioId;
 
-    public void enviar(){
+    @Column(name = "trayecto_id", nullable = false)
+    private Integer trayectoId;
 
-    }
-    public void eliminar(){
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String contenido;
 
-    }
+    @Column(name = "fecha_envio", nullable = false)
+    private LocalDateTime fechaEnvio = LocalDateTime.now();
 
-    public String getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(String fechaHora) {
-        this.fechaHora = fechaHora;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Mensaje{" +
-                "id='" + id + '\'' +
-                ", texto='" + texto + '\'' +
-                ", fechaHora='" + fechaHora + '\'' +
-                '}';
-    }
+    @Column(nullable = false)
+    private Boolean leido = false;
 }
