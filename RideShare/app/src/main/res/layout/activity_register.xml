@@ -24,16 +24,15 @@
 
     <EditText
         android:id="@+id/editTextCorreo"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="Correo"
-        android:textColor="@color/black"
+        android:layout_width="299dp"
+        android:layout_height="26dp"
         android:background="@drawable/caja_redonda"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/textoRegister1"
+        android:hint="Correo"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/textoRegister1" />
 
     <TextView
         android:id="@+id/textoRegister2"
