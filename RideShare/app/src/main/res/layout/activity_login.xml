@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/editTextCorreo" />
 
     <EditText
-        android:id="@+id/editTextContraseña"
+        android:id="@+id/editTextContrasenia"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
@@ -73,7 +73,7 @@
 
 
     <Button
-        android:id="@+id/botonLoginMain"
+        android:id="@+id/botonLoginLogin"
         android:layout_width="188dp"
         android:layout_height="58dp"
         android:layout_marginTop="196dp"
