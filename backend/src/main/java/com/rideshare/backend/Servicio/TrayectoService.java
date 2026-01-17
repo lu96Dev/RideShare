@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -21,15 +20,22 @@ public class TrayectoService {
     public Trayecto crearTrayecto(Trayecto trayecto, Integer conductorId) {
 
         usuarioRepository.findById(conductorId)
-                .orElseThrow(() -> new RuntimeException("Conductor no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         trayecto.setConductorId(conductorId);
-        trayecto.setPlazasDisponibles(trayecto.getPlazasTotales());
+        trayecto.setActivo(true);
 
         return trayectoRepository.save(trayecto);
     }
 
-    public List<Trayecto> obtenerTrayectosDisponibles() {
-        return trayectoRepository.findTrayectosDisponibles(LocalDate.now());
+    public List<Trayecto> obtenerTrayectosActivos() {
+        return trayectoRepository.findByActivoTrue();
+    }
+
+    public void cerrarTrayecto(Integer trayectoId) {
+        trayectoRepository.findById(trayectoId).ifPresent(t -> {
+            t.setActivo(false);
+            trayectoRepository.save(t);
+        });
     }
 }
