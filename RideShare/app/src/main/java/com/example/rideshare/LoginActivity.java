@@ -1,5 +1,6 @@
 package com.example.rideshare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -82,6 +83,10 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this,
                                     response.body().getMensaje(),
                                     Toast.LENGTH_SHORT).show();
+                          
+                          Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);
+                startActivity(intent);
+                finish();
 
                         } else if (response.code() == 401) {
                             Toast.makeText(LoginActivity.this,

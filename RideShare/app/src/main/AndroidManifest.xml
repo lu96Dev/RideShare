@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RideShare">
         <activity
+            android:name=".PublicationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ContainerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
