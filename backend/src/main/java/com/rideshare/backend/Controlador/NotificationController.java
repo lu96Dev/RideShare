@@ -4,7 +4,6 @@ import com.rideshare.backend.Entidades.Notificacion;
 import com.rideshare.backend.Servicio.NotificacionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
