@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RideShare">
         <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".PublicationActivity"
             android:exported="false" />
         <activity
@@ -19,9 +22,6 @@
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SearchActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

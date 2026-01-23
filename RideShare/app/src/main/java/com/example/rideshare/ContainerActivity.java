@@ -1,45 +1,56 @@
 package com.example.rideshare;
 
 import android.os.Bundle;
-import android.view.View;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ContainerActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 1. Habilitar el modo de pantalla completa (opcional pero recomendado)
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_container);
 
-        // 3. Ajustar márgenes para que la barra de estado no tape tu diseño
-        View mainView = findViewById(R.id.main);
-        if (mainView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                return insets;
-            });
-        }
-        // 4. Configurar la Navegación (La lógica de tu barra azul)
-        BottomNavigationView navView = findViewById(R.id.bottom_navigation);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        ViewPager2 viewPager = findViewById(R.id.viewPager);
 
-        if (navHostFragment != null) {
-            NavController navController = navHostFragment.getNavController();
-            // Esto une el menú con los fragmentos
-            NavigationUI.setupWithNavController(navView, navController);
-        }
+        List<Fragment> fragments = Arrays.asList(
+                new SearchFragment(),
+                new PublicationFragment()
+        );
+
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(this, fragments);
+        viewPager.setAdapter(adapter);
+
+        String[] nombres = {"Buscar", "Perfil", "Chat", "Publicar"};
+        int[] iconos = {
+                R.drawable.icon_buscar,
+                R.drawable.icon_publicar
+        };
+
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    tab.setText(nombres[position]);
+                    tab.setIcon(iconos[position]);
+                }
+        ).attach();
     }
 }
