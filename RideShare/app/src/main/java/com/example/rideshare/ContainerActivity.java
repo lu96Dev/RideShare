@@ -33,10 +33,8 @@ public class ContainerActivity extends AppCompatActivity {
         ViewPager2 viewPager = findViewById(R.id.viewPager);
 
         List<Fragment> fragments = Arrays.asList(
-                new BuscarFragment(),
-                new PerfilFragment(),
-                new ChatFragment(),
-                new PublicarFragment()
+                new SearchFragment(),
+                new PublicationFragment()
         );
 
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(this, fragments);
@@ -44,10 +42,8 @@ public class ContainerActivity extends AppCompatActivity {
 
         String[] nombres = {"Buscar", "Perfil", "Chat", "Publicar"};
         int[] iconos = {
-                R.drawable.ic_buscar,
-                R.drawable.ic_perfil,
-                R.drawable.ic_chat,
-                R.drawable.ic_publicar
+                R.drawable.icon_buscar,
+                R.drawable.icon_publicar
         };
 
         new TabLayoutMediator(tabLayout, viewPager,
