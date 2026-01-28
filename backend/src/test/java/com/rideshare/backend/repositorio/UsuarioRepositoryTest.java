@@ -18,14 +18,14 @@ class UsuarioRepositoryTest {
     @Test
     void guardarYBuscarPorEmail() {
         Usuario usuario = Usuario.builder()
-                .nombre("SOUAKINA")
-                .apellidos("ABOUSAID")
-                .email("12938@gmail.com")
+                .nombre("Bruno")
+                .apellidos("Rodriguez")
+                .email("br1@gmail.com")
                 .password("1664")
                 .build();
 
         usuarioRepository.save(usuario);
 
-        assertTrue(usuarioRepository.findByEmail("test@test.com").isPresent());
+        assertTrue(usuarioRepository.findByEmail("br1@gmail.com").isPresent());
     }
 }

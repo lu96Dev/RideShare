@@ -3,6 +3,7 @@ package com.rideshare.backend.Servicio;
 import com.rideshare.backend.Entidades.Trayecto;
 import com.rideshare.backend.Repositorio.TrayectoRepository;
 import com.rideshare.backend.Repositorio.UsuarioRepository;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 public class TrayectoService {
 
     private final TrayectoRepository trayectoRepository;

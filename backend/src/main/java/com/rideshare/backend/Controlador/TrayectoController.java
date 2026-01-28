@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrayectoController {
 
-    private final TrayectoService trayectoService;
+    private final TrayectoService trayectoService = new TrayectoService();
 
     @PostMapping("/{usuarioId}")
     public Trayecto crear(@PathVariable Integer usuarioId,
