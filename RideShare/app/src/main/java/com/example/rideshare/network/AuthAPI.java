@@ -10,7 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface AuthAPI {
-    @POST("auth/inicio")
+    @POST("api/auth/login")
     Call<RespuestaInicio> Inicio(@Body SolicitudInicio solicitudInicio);
 
     @POST("auth/registro")
