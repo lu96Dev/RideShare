@@ -47,6 +47,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
+        System.out.println("EMAIL: " + request.getEmail());
+        System.out.println("PASS: " + request.getPassword());
 
         return usuarioService.login(request.getEmail(), request.getPassword())
                 .map(usuario -> new LoginResponse(

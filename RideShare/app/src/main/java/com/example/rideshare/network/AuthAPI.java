@@ -13,6 +13,6 @@ public interface AuthAPI {
     @POST("api/auth/login")
     Call<RespuestaInicio> Inicio(@Body SolicitudInicio solicitudInicio);
 
-    @POST("auth/registro")
+    @POST("api/auth/registro")
     Call<RespuestaRegistro> Registro(@Body SolicitudRegistro solicitudRegistro);
 }
