@@ -1,11 +1,11 @@
 package com.example.rideshare.dto;
 
 public class SolicitudInicio {
-    private String correo;
-    private String contrasenia;
+    private String email;
+    private String password;
 
-    public SolicitudInicio(String correo, String contrasenia) {
-        this.correo = correo;
-        this.contrasenia = contrasenia;
+    public SolicitudInicio(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 }
