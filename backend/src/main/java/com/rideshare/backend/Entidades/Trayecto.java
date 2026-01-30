@@ -2,7 +2,6 @@ package com.rideshare.backend.Entidades;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
@@ -21,6 +20,7 @@ public class Trayecto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // Usuario que publica el anuncio
     @Column(name = "conductor_id", nullable = false)
     private Integer conductorId;
 
@@ -36,11 +36,10 @@ public class Trayecto {
     @Column(nullable = false)
     private LocalTime hora;
 
-    @Column(name = "plazas_disponibles", nullable = false)
-    private Integer plazasDisponibles;
-
-    @Column(name = "plazas_totales", nullable = false)
-    private Integer plazasTotales;
+    // Anuncio activo o cerrado
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean activo = true;
 
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;

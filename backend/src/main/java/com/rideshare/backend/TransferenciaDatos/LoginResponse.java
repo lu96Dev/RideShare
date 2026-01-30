@@ -1,0 +1,14 @@
+package com.rideshare.backend.TransferenciaDatos;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public class LoginResponse {
+    private boolean correcto;
+    private String mensaje;
+    private Integer id;
+    private String nombre;
+    private String email;
+}
