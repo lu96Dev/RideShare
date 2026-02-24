@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         botonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 String correo = editCorreo.getText().toString().trim();
                 String contrasenia = editContrasenia.getText().toString().trim();
 
@@ -83,11 +84,11 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this,
                                     response.body().getMensaje(),
                                     Toast.LENGTH_SHORT).show();
-                          
+                */
                           Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);
                 startActivity(intent);
                 finish();
-
+                /*
                         } else if (response.code() == 401) {
                             Toast.makeText(LoginActivity.this,
                                     "Correo o contraseña incorrectos",
@@ -116,6 +117,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
+                
+                 */
             }
         });
 

@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comparte viaje, haz contactos y ahorra junto a tus compañeros con RideShare."
-            android:textColor="#FF5A43"
+            android:textColor="#FF751E"
             android:textStyle="bold"
             android:textAlignment="center"
             android:textSize="16sp" />
@@ -102,9 +102,11 @@
             android:layout_height="55dp"
             android:layout_marginTop="196dp"
             android:layout_marginBottom="44dp"
-            android:backgroundTint="@color/orange"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@null"
+            android:background="@drawable/boton_gradiante"
             android:text="Continuar"
-            android:textColor="@color/white"
+            android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

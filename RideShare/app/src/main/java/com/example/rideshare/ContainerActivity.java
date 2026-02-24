@@ -34,8 +34,8 @@ public class ContainerActivity extends AppCompatActivity {
 
         List<Fragment> fragments = Arrays.asList(
                 new SearchFragment(),
-                new PublicationFragment(),
-                new ProfileFragment()
+                new ProfileFragment(),
+                new PublicationFragment()
         );
 
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(this, fragments);
@@ -45,8 +45,8 @@ public class ContainerActivity extends AppCompatActivity {
         int[] iconos = {
                 R.drawable.icon_buscar,
                 R.drawable.icon_perfil,
-                R.drawable.icon_chat,
-                R.drawable.icon_publicar
+                R.drawable.icon_publicar,
+                R.drawable.icon_chat
         };
 
         new TabLayoutMediator(tabLayout, viewPager,
