@@ -30,8 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        EditText editCorreo = findViewById(R.id.editTextCorreo);
-        EditText editContrasenia = findViewById(R.id.editTextContrasenia);
+        EditText editCorreo = findViewById(R.id.editTextCorreoLogin);
+        EditText editContrasenia = findViewById(R.id.editTextContraseniaLogin);
         Button botonLogin = findViewById(R.id.botonLoginLogin);
 
         botonLogin.setOnClickListener(new View.OnClickListener() {
