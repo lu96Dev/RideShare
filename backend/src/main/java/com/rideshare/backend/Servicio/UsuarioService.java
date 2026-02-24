@@ -15,7 +15,7 @@ public class UsuarioService {
 
     public Usuario registrar(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
-            throw new RuntimeException("El email ya está registrado");
+            throw new RuntimeException("EMAIL_EXISTE");
         }
         return usuarioRepository.save(usuario);
     }

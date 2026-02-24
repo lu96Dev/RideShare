@@ -17,9 +17,13 @@ public class AuthController {
     public LoginResponse registro(@RequestBody RegistroRequest request) {
 
         try {
+
+            System.out.println("REGISTRO EMAIL: " + request.getEmail());
+            System.out.println("REGISTRO PASS: " + request.getPassword());
+
             Usuario usuario = Usuario.builder()
-                    .nombre(request.getNombre())
-                    .apellidos(request.getApellidos())
+                    .nombre("Usuario")
+                    .apellidos("Nuevo")
                     .email(request.getEmail())
                     .password(request.getPassword())
                     .build();
@@ -34,15 +38,49 @@ public class AuthController {
                     guardado.getEmail()
             );
 
-        } catch (Exception e) {
+        }  catch (org.springframework.dao.DataIntegrityViolationException e) {
+
             return new LoginResponse(
                     false,
-                    "El correo ya está registrado",
+                    "Este correo ya está registrado",
+                    null,
+                    null,
+                    null
+            );
+
+        } catch (RuntimeException e) {
+
+            if(e.getMessage().equals("EMAIL_EXISTE")){
+
+                return new LoginResponse(
+                        false,
+                        "Este correo ya está registrado",
+                        null,
+                        null,
+                        null
+                );
+            }
+
+            return new LoginResponse(
+                    false,
+                    "Error al registrar usuario",
+                    null,
+                    null,
+                    null
+            );
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new LoginResponse(
+                    false,
+                    "No se ha podido realizar el registro",
                     null,
                     null,
                     null
             );
         }
+
     }
 
     @PostMapping("/login")
