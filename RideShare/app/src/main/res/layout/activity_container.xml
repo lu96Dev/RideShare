@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -23,5 +22,4 @@
         app:tabTextColor="@android:color/white"
         app:tabIconTint="@color/tab_icon_color"
         android:background="#0033CC"/>
-
 </LinearLayout>
