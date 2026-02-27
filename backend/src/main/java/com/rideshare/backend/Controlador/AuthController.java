@@ -28,7 +28,10 @@ public class AuthController {
         return new LoginResponse(
                 guardado.getId(),
                 guardado.getNombre(),
-                guardado.getEmail()
+                guardado.getEmail(),
+                guardado.getBiografia(),
+                true,
+                "¡Bienvenido de nuevo!"
         );
     }
 
@@ -40,10 +43,14 @@ public class AuthController {
                 request.getPassword()
         ).orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
 
+        // USAMOS EL CONSTRUCTOR COMPLETO (6 parámetros)
         return new LoginResponse(
                 usuario.getId(),
                 usuario.getNombre(),
-                usuario.getEmail()
+                usuario.getEmail(),
+                usuario.getBiografia(), // <--- Ahora la biografía sí viaja al móvil
+                true,                   // <--- 'correcto' para el IF de Android
+                "¡Inicio de sesión exitoso!" // <--- 'mensaje' para el Toast de Android
         );
     }
 }
