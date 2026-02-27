@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@drawable/fondo_azul"
     tools:context=".MainActivity">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="No tienes cuenta? "
+        android:text="¿No tienes cuenta? "
         android:textColor="@color/white"
         android:textSize="15dp"
         app:layout_constraintEnd_toStartOf="@id/textoMain2"
@@ -34,39 +34,47 @@
         app:layout_constraintStart_toEndOf="@id/textoMain1"
         app:layout_constraintTop_toBottomOf="@id/botonLoginMain" />
 
+
     <TextView
         android:id="@+id/textoLogoMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RideShare"
-        android:textSize="20dp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/imagenLogoMain"
+        android:textSize="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.185" />
 
     <Button
         android:id="@+id/botonLoginMain"
-        android:layout_width="188dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="196dp"
+        android:layout_width="237dp"
+        android:layout_height="63dp"
         android:text="Iniciar Sesión"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/orange"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@null"
+        android:background="@drawable/boton_gradiante"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagenLogoMain" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.771" />
 
     <ImageView
         android:id="@+id/imagenLogoMain"
-        android:layout_width="187dp"
-        android:layout_height="222dp"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
         android:src="@drawable/rideshare"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141" />
+        app:layout_constraintVertical_bias="0.469" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
