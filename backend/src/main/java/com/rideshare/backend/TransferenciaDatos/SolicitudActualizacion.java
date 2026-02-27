@@ -1,0 +1,10 @@
+package com.rideshare.backend.TransferenciaDatos;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class SolicitudActualizacion {
+    private String biografia;
+}

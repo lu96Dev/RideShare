@@ -40,4 +40,16 @@ public class UsuarioService {
             return usuarioRepository.save(u);
         }).orElseThrow();
     }
+
+    public Usuario guardar(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    // Este método es opcional pero ayuda a mantener el código limpio
+    public Usuario actualizarSoloBiografia(Integer id, String nuevaBio) {
+        return usuarioRepository.findById(id).map(u -> {
+            u.setBiografia(nuevaBio);
+            return usuarioRepository.save(u);
+        }).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
 }
