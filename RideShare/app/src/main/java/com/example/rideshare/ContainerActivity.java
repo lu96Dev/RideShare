@@ -45,8 +45,8 @@ public class ContainerActivity extends AppCompatActivity {
         int[] iconos = {
                 R.drawable.icon_buscar,
                 R.drawable.icon_perfil,
-                R.drawable.icon_publicar,
-                R.drawable.icon_chat
+                R.drawable.icon_chat,
+                R.drawable.icon_publicar
         };
 
         new TabLayoutMediator(tabLayout, viewPager,

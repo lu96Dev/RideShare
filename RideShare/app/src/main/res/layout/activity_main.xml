@@ -51,13 +51,13 @@
 
     <Button
         android:id="@+id/botonLoginMain"
-        android:layout_width="237dp"
-        android:layout_height="63dp"
+        android:layout_width="230dp"
+        android:layout_height="53dp"
+        android:background="@drawable/boton_gradiante"
         android:text="Iniciar Sesión"
         android:textColor="@android:color/white"
+        android:textSize="16dp"
         app:backgroundTint="@null"
-        android:background="@drawable/boton_gradiante"
-        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

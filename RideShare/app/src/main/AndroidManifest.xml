@@ -17,16 +17,10 @@
 
 
         <activity
-            android:name=".SearchActivity"
-            android:exported="false" />
-        <activity
             android:name=".PublicationActivity"
             android:exported="false" />
         <activity
             android:name=".ContainerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

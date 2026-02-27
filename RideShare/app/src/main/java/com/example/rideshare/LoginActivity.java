@@ -89,11 +89,11 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this,
                                         respuesta.getMensaje(),
                                         Toast.LENGTH_SHORT).show();
-
+                                        */
                                 Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);
                                 startActivity(intent);
                                 finish();
-
+                           /*
                             } else {
                                 Toast.makeText(LoginActivity.this,
                                         respuesta.getMensaje(),
@@ -118,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-                
                  */
             }
         });
