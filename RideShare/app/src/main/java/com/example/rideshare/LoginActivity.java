@@ -30,8 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        EditText editCorreo = findViewById(R.id.editTextCorreo);
-        EditText editContrasenia = findViewById(R.id.editTextContrasenia);
+        EditText editCorreo = findViewById(R.id.editTextCorreoLogin);
+        EditText editContrasenia = findViewById(R.id.editTextContraseniaLogin);
         Button botonLogin = findViewById(R.id.botonLoginLogin);
 
         botonLogin.setOnClickListener(new View.OnClickListener() {
@@ -81,27 +81,28 @@ public class LoginActivity extends AppCompatActivity {
                         botonLogin.setText("Iniciar sesión");
 
                         if (response.isSuccessful() && response.body() != null) {
-                            Toast.makeText(LoginActivity.this,
-                                    response.body().getMensaje(),
-                                    Toast.LENGTH_SHORT).show();
-                */
-                          Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);
-                startActivity(intent);
-                finish();
-                /*
-                        } else if (response.code() == 401) {
-                            Toast.makeText(LoginActivity.this,
-                                    "Correo o contraseña incorrectos",
-                                    Toast.LENGTH_SHORT).show();
 
-                        } else if (response.code() == 500) {
-                            Toast.makeText(LoginActivity.this,
-                                    "Error del servidor. Inténtalo más tarde",
-                                    Toast.LENGTH_SHORT).show();
+                            RespuestaInicio respuesta = response.body();
+
+                            if (respuesta.esCorrecto()) {
+
+                                Toast.makeText(LoginActivity.this,
+                                        respuesta.getMensaje(),
+                                        Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);
+                                startActivity(intent);
+                                finish();
+
+                            } else {
+                                Toast.makeText(LoginActivity.this,
+                                        respuesta.getMensaje(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
 
                         } else {
                             Toast.makeText(LoginActivity.this,
-                                    "Error inesperado (" + response.code() + ")",
+                                    "Credenciales incorrectas.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
