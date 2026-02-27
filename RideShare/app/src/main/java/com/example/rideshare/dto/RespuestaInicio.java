@@ -7,6 +7,7 @@ public class RespuestaInicio {
     private String nombre;
     private String email;
 
+    private String biografia;
     public boolean esCorrecto() {
         return correcto;
     }
@@ -18,4 +19,5 @@ public class RespuestaInicio {
     public Integer getId() {
         return id;
     }
+    public String getBiografia() {return biografia;}
 }

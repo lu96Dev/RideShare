@@ -14,4 +14,8 @@ public class RetrofitCliente {
         }
         return retrofit;
     }
+
+    public static UsuarioAPI getUsuarioAPI() {
+        return getClient().create(UsuarioAPI.class);
+    }
 }
