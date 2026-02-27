@@ -9,4 +9,7 @@ public class LoginResponse {
     private Integer id;
     private String nombre;
     private String email;
+    private String biografia;
+    private boolean correcto;
+    private String mensaje;
 }
