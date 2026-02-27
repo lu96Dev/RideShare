@@ -1,6 +1,8 @@
 package com.example.rideshare;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -28,9 +30,7 @@ public class ProfileFragment extends Fragment {
     private ImageView avatar;
     private LinearLayout btnBiblio;
     private TextView ResultadoBiblio;
-
-    // TODO: Recuperar el ID real del login. Si este ID no existe en tu DB, el servidor dará error 404.
-    private Integer idUsuarioLogueado = 1;
+    private Integer idUsuarioLogueado; // Ahora es dinámico
 
     private final ActivityResultLauncher<String> getContent = registerForActivityResult(
             new ActivityResultContracts.GetContent(),
@@ -47,6 +47,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        // --- CARGAR ID REAL ---
+        SharedPreferences preferences = getActivity().getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE);
+        idUsuarioLogueado = preferences.getInt("id_usuario", -1);
+        // ----------------------
+
         avatar = view.findViewById(R.id.imagenPerfil);
         btnBiblio = view.findViewById(R.id.btnPublicarBiblio);
         ResultadoBiblio = view.findViewById(R.id.ResultadoBiblio);
@@ -59,6 +64,11 @@ public class ProfileFragment extends Fragment {
     }
 
     private void abrirDialogoTexto() {
+        if (idUsuarioLogueado == -1) {
+            Toast.makeText(getContext(), "Error: Sesión no válida", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Editar Biografía");
 
@@ -88,32 +98,18 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onResponse(Call<RespuestaInicio> call, Response<RespuestaInicio> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            // ÉXITO: El servidor guardó los datos
                             actualizarInterfaz(nuevaBio);
                             Toast.makeText(getContext(), response.body().getMensaje(), Toast.LENGTH_SHORT).show();
                         } else {
-                            // ERROR DE LÓGICA: El servidor respondió pero con un error (404, 500, etc.)
-                            String errorMsg = "Error del servidor (Código " + response.code() + ")";
-
-                            // Intentamos ver si el servidor nos mandó un JSON con el mensaje de error
-                            try {
-                                if (response.errorBody() != null) {
-                                    Log.e("API_ERROR", "Detalle: " + response.errorBody().string());
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            Log.e("API_ERROR", errorMsg);
-                            Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
+                            Log.e("API_ERROR", "Código: " + response.code());
+                            Toast.makeText(getContext(), "Error al guardar: El ID " + idUsuarioLogueado + " no existe", Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RespuestaInicio> call, Throwable t) {
-                        // ERROR DE RED: No se pudo llegar al servidor
                         Log.e("NETWORK_ERROR", "Causa: " + t.getMessage());
-                        Toast.makeText(getContext(), "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Sin conexión", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
