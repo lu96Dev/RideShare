@@ -37,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         botonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
                 String correo = editCorreo.getText().toString().trim();
                 String contrasenia = editContrasenia.getText().toString().trim();
 
@@ -118,8 +117,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-                
-                 */
             }
         });
 
