@@ -103,7 +103,8 @@
         android:layout_marginTop="196dp"
         android:text="Registrarse"
         android:textColor="@color/white"
-        android:backgroundTint="@color/orange"
+        app:backgroundTint="@null"
+        android:background="@drawable/boton_gradiante"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imagenLogoRegister" />

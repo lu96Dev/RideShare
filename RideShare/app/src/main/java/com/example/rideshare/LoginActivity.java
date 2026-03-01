@@ -1,6 +1,8 @@
 package com.example.rideshare;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
                 String contrasenia = editContrasenia.getText().toString().trim();
 
                 boolean valido = true;
-
                 editCorreo.setError(null);
                 editContrasenia.setError(null);
 
@@ -49,20 +50,15 @@ public class LoginActivity extends AppCompatActivity {
                     editCorreo.setError("El correo es obligatorio");
                     valido = false;
                 }
-
                 if (!android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
                     editCorreo.setError("Correo no válido");
                     valido = false;
                 }
-
                 if (contrasenia.isEmpty()) {
                     editContrasenia.setError("La contraseña es obligatoria");
                     valido = false;
                 }
-
-                if (!valido) {
-                    return;
-                }
+                if (!valido) return;
 
                 botonLogin.setEnabled(false);
                 botonLogin.setText("Cargando...");
@@ -75,46 +71,37 @@ public class LoginActivity extends AppCompatActivity {
                 call.enqueue(new Callback<RespuestaInicio>() {
                     @Override
                     public void onResponse(Call<RespuestaInicio> call, Response<RespuestaInicio> response) {
-
                         botonLogin.setEnabled(true);
                         botonLogin.setText("Iniciar sesión");
 
                         if (response.isSuccessful() && response.body() != null) {
-
                             RespuestaInicio respuesta = response.body();
 
                             if (respuesta.esCorrecto()) {
+                                // --- GUARDAR ID DE USUARIO ---
+                                SharedPreferences prefs = getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putInt("id_usuario", respuesta.getId());
+                                editor.apply();
+                                // -----------------------------
 
-                                Toast.makeText(LoginActivity.this,
-                                        respuesta.getMensaje(),
-                                        Toast.LENGTH_SHORT).show();
-
+                                Toast.makeText(LoginActivity.this, respuesta.getMensaje(), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);
                                 startActivity(intent);
                                 finish();
-
                             } else {
-                                Toast.makeText(LoginActivity.this,
-                                        respuesta.getMensaje(),
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, respuesta.getMensaje(), Toast.LENGTH_SHORT).show();
                             }
-
                         } else {
-                            Toast.makeText(LoginActivity.this,
-                                    "Credenciales incorrectas.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Credenciales incorrectas.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RespuestaInicio> call, Throwable throwable) {
-
                         botonLogin.setEnabled(true);
                         botonLogin.setText("Iniciar sesión");
-
-                        Toast.makeText(LoginActivity.this,
-                                "Error de conexión (prueba)",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
