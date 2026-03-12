@@ -18,12 +18,12 @@
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagenLogoLogin"
+        app:layout_constraintTop_toBottomOf="@id/imagenLogoRegister"
         app:layout_constraintHorizontal_chainStyle="packed"
         />
 
     <EditText
-        android:id="@+id/editTextCorreo"
+        android:id="@+id/editTextCorreoRegister"
         android:layout_width="299dp"
         android:layout_height="26dp"
         android:background="@drawable/caja_redonda"
@@ -44,10 +44,10 @@
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextCorreo" />
+        app:layout_constraintTop_toBottomOf="@id/editTextCorreoRegister" />
 
     <EditText
-        android:id="@+id/editTextContraseña"
+        android:id="@+id/editTextContraseñaRegister"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
@@ -69,10 +69,10 @@
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextContraseña" />
+        app:layout_constraintTop_toBottomOf="@id/editTextContraseñaRegister" />
 
     <EditText
-        android:id="@+id/editTextRepetirContraseña"
+        android:id="@+id/editTextRepetirContraseñaRegister"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
@@ -85,31 +85,32 @@
         />
 
     <TextView
-        android:id="@+id/textoLogoLogin"
+        android:id="@+id/textoLogoRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RideShare"
         android:textSize="20dp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/imagenLogoLogin"
+        app:layout_constraintBottom_toTopOf="@id/imagenLogoRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
     <Button
-        android:id="@+id/botonLoginMain"
+        android:id="@+id/botonRegisterMain"
         android:layout_width="188dp"
         android:layout_height="58dp"
         android:layout_marginTop="196dp"
         android:text="Registrarse"
         android:textColor="@color/white"
-        android:backgroundTint="@color/orange"
+        app:backgroundTint="@null"
+        android:background="@drawable/boton_gradiante"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagenLogoLogin" />
+        app:layout_constraintTop_toBottomOf="@id/imagenLogoRegister" />
 
     <ImageView
-        android:id="@+id/imagenLogoLogin"
+        android:id="@+id/imagenLogoRegister"
         android:layout_width="187dp"
         android:layout_height="222dp"
         android:src="@drawable/rideshare"

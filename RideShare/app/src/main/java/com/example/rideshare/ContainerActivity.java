@@ -34,6 +34,8 @@ public class ContainerActivity extends AppCompatActivity {
 
         List<Fragment> fragments = Arrays.asList(
                 new SearchFragment(),
+                new ProfileFragment(),
+                new ChatFragment(),
                 new PublicationFragment()
         );
 
@@ -43,6 +45,8 @@ public class ContainerActivity extends AppCompatActivity {
         String[] nombres = {"Buscar", "Perfil", "Chat", "Publicar"};
         int[] iconos = {
                 R.drawable.icon_buscar,
+                R.drawable.icon_perfil,
+                R.drawable.icon_chat,
                 R.drawable.icon_publicar
         };
 
