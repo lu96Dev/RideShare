@@ -35,6 +35,7 @@ public class ContainerActivity extends AppCompatActivity {
         List<Fragment> fragments = Arrays.asList(
                 new SearchFragment(),
                 new ProfileFragment(),
+                new ChatFragment(),
                 new PublicationFragment()
         );
 
