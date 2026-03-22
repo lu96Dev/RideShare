@@ -29,7 +29,9 @@ public class ProfileFragment extends Fragment {
 
     private ImageView avatar;
     private LinearLayout btnBiblio;
-    private TextView ResultadoBiblio;
+    private TextView resultadoBiblio;
+
+    private TextView nombreUsuarioPerfil;
     private Integer idUsuarioLogueado; // Ahora es dinámico
 
     private final ActivityResultLauncher<String> getContent = registerForActivityResult(
@@ -52,15 +54,49 @@ public class ProfileFragment extends Fragment {
         idUsuarioLogueado = preferences.getInt("id_usuario", -1);
         // ----------------------
 
+        Log.d("PROFILE_DEBUG", "ID cargado de SharedPreferences: " + idUsuarioLogueado);
+
         avatar = view.findViewById(R.id.imagenPerfil);
         btnBiblio = view.findViewById(R.id.btnPublicarBiblio);
-        ResultadoBiblio = view.findViewById(R.id.ResultadoBiblio);
+        resultadoBiblio = view.findViewById(R.id.ResultadoBiblio);
+        nombreUsuarioPerfil = view.findViewById(R.id.nombreUsuario);
 
         avatar.setOnClickListener(v -> getContent.launch("image/*"));
         btnBiblio.setOnClickListener(v -> abrirDialogoTexto());
-        ResultadoBiblio.setOnClickListener(v -> abrirDialogoTexto());
+        resultadoBiblio.setOnClickListener(v -> abrirDialogoTexto());
+
+        cargarDatosUsuario();
 
         return view;
+    }
+
+    private void cargarDatosUsuario() {
+        if (idUsuarioLogueado == -1) {
+            return;
+        }
+
+        RetrofitCliente.getUsuarioAPI().obtenerUsuario(idUsuarioLogueado)
+                .enqueue(new Callback<RespuestaInicio>() {
+                    @Override
+                    public void onResponse(Call<RespuestaInicio> call, Response<RespuestaInicio> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            RespuestaInicio usuario = response.body();
+
+                            // Mostrar biografía si existe
+                            actualizarInterfaz(usuario.getBiografia());
+                            nombreUsuarioPerfil.setText(usuario.getNombre());
+
+                            // Aquí puedes cargar más campos en el futuro:
+                            // nombreTextView.setText(usuario.getNombre());
+                            // etc.
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RespuestaInicio> call, Throwable t) {
+                        Log.e("PROFILE_ERROR", "Error al cargar perfil: " + t.getMessage());
+                    }
+                });
     }
 
     private void abrirDialogoTexto() {
@@ -73,7 +109,7 @@ public class ProfileFragment extends Fragment {
         builder.setTitle("Editar Biografía");
 
         final EditText ventanaTexto = new EditText(getContext());
-        String textoActual = ResultadoBiblio.getText().toString();
+        String textoActual = resultadoBiblio.getText().toString();
 
         if (!textoActual.isEmpty()) {
             ventanaTexto.setText(textoActual);
@@ -93,10 +129,16 @@ public class ProfileFragment extends Fragment {
     private void actualizarBiografiaEnServidor(String nuevaBio) {
         SolicitudActualizacion solicitud = new SolicitudActualizacion(nuevaBio);
 
+        Log.d("API_DEBUG", "Enviando a ID: " + idUsuarioLogueado);
+        Log.d("API_DEBUG", "Biografía: " + nuevaBio);
+
         RetrofitCliente.getUsuarioAPI().actualizarPerfil(idUsuarioLogueado, solicitud)
                 .enqueue(new Callback<RespuestaInicio>() {
                     @Override
                     public void onResponse(Call<RespuestaInicio> call, Response<RespuestaInicio> response) {
+                        Log.d("API_DEBUG", "onResponse llamado");
+                        Log.d("API_DEBUG", "Código respuesta: " + response.code());
+
                         if (response.isSuccessful() && response.body() != null) {
                             actualizarInterfaz(nuevaBio);
                             Toast.makeText(getContext(), response.body().getMensaje(), Toast.LENGTH_SHORT).show();
@@ -116,12 +158,12 @@ public class ProfileFragment extends Fragment {
 
     private void actualizarInterfaz(String texto) {
         if (texto == null || texto.isEmpty()) {
-            ResultadoBiblio.setText("");
-            ResultadoBiblio.setVisibility(View.GONE);
+            resultadoBiblio.setText("");
+            resultadoBiblio.setVisibility(View.GONE);
             btnBiblio.setVisibility(View.VISIBLE);
         } else {
-            ResultadoBiblio.setText(texto);
-            ResultadoBiblio.setVisibility(View.VISIBLE);
+            resultadoBiblio.setText(texto);
+            resultadoBiblio.setVisibility(View.VISIBLE);
             btnBiblio.setVisibility(View.GONE);
         }
     }
