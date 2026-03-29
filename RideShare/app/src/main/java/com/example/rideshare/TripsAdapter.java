@@ -42,7 +42,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
                 if (v.getContext() instanceof ContainerActivity) {
                     ContainerActivity activity = (ContainerActivity) v.getContext();
 
-                    // Opción A: Si tienes un método en la Activity para cambiar al chat
+                    // Opción A: Si tienes un metodo en la Activity para cambiar al chat
                     activity.irAlChat();
 
                     // Opción B: Si quieres que el TabLayout cambie automáticamente a la pestaña 3 (Chat)
