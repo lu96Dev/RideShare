@@ -3,6 +3,8 @@ package com.example.rideshare.network;
 import com.example.rideshare.dto.RespuestaInicio;
 import com.example.rideshare.dto.SolicitudActualizacion;
 import com.example.rideshare.Usuario;
+import com.example.rideshare.dto.SolicitudCambioPassword;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,4 +18,9 @@ public interface UsuarioAPI {
     Call<RespuestaInicio> obtenerUsuario(@Path("id") Integer id);
     @PUT("api/usuarios/{id}")
     Call<RespuestaInicio> actualizarPerfil(@Path("id") Integer id, @Body SolicitudActualizacion solicitud);
+
+    @PUT("api/usuarios/{id}/password")
+    Call<RespuestaInicio> cambiarPassword(@Path("id") Integer id, @Body SolicitudCambioPassword solicitud);
+
+
 }
