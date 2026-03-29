@@ -57,4 +57,23 @@ public class ContainerActivity extends AppCompatActivity {
                 }
         ).attach();
     }
+    public void mostrarResultados() {
+        // añade el fragmento de resultados sobre el layout principal (main)
+        TripsFragment tripsFragment = new TripsFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main, tripsFragment)
+                .addToBackStack(null)          // Esto permite volver atrás con el botón del móvil
+                .commit();
+    }
+    public void irAlChat() {
+        ViewPager2 viewPager = findViewById(R.id.viewPager);
+        if (viewPager != null) {
+            viewPager.setCurrentItem(2, true);
+
+            // y vuelvas a la pantalla de búsqueda "debajo", quita el comentario a la siguiente línea:
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
 }
