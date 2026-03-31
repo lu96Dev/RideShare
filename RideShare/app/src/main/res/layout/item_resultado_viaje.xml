@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="117dp"
         android:background="@drawable/fondo_azul"
         android:padding="16dp">
 
@@ -21,10 +21,10 @@
             android:layout_height="60dp"
             android:scaleType="centerCrop"
             android:src="@drawable/fondo_perfil"
-            app:shapeAppearanceOverlay="@drawable/caja_redonda"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@drawable/caja_redonda" />
 
         <TextView
             android:id="@+id/tvNombreBusqueda"
@@ -36,7 +36,7 @@
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/ivPerfilBusqueda"
-            app:layout_constraintTop_toTopOf="@id/ivPerfilBusqueda" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvTiempo"
@@ -65,10 +65,23 @@
             android:id="@+id/tvHoraSalida"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="Distancia sobre ti: "
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/llChatContainer"
+            app:layout_constraintStart_toStartOf="@id/tvNombreBusqueda"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcionViaje" />
+
+        <TextView
+            android:id="@+id/tvHoraSalida2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Salida a las 00:00"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/llChatContainer"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/tvNombreBusqueda"
             app:layout_constraintTop_toBottomOf="@id/tvDescripcionViaje" />
 
@@ -86,10 +99,10 @@
                 android:id="@+id/ivIconoChat"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/icon_chat"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/icon_chat"
                 app:tint="#FFFFFF" />
 
             <TextView
