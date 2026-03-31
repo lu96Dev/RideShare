@@ -2,52 +2,52 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"> <!-- Fondo azul para toda la página -->
+    android:background="@drawable/fondo_azul"> <!-- Fondo azul para toda la página -->
 
     <!-- Barra superior azul claro -->
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/blue_light"
+        android:layout_height="93dp"
+        android:background="#2175F3"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:gravity="center_vertical">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/imgUsuario"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:scaleType="centerCrop"
             android:background="@drawable/caja_redonda"
             android:clipToOutline="true"
-            android:outlineProvider="background"/>
+            android:outlineProvider="background"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/nombreUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre"
-            android:textSize="18sp"
-            android:textColor="@color/white"
             android:layout_marginStart="10dp"
-            android:textStyle="bold"/>
+            android:text="Nombre"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMensajes"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="562dp"
         android:layout_weight="1"
-        android:padding="8dp"/>
+        android:padding="8dp" />
 
     <!-- Caja de mensaje -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/blue_light"
+        android:background="#2175F3"
         android:padding="8dp">
 
         <EditText
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Escribe un mensaje..."
-            android:background="@color/white"
+            android:background="@drawable/chat_redondeado"
             android:padding="10dp"/>
 
         <Button
