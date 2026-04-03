@@ -2,7 +2,6 @@ package com.example.rideshare.network;
 
 import com.example.rideshare.dto.RespuestaInicio;
 import com.example.rideshare.dto.SolicitudActualizacion;
-import com.example.rideshare.Usuario;
 import com.example.rideshare.dto.SolicitudCambioPassword;
 
 import retrofit2.Call;
