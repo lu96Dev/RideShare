@@ -1,6 +1,8 @@
 package com.example.rideshare;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -103,6 +105,14 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, respuesta.getMensaje(), Toast.LENGTH_SHORT).show();
 
                             if (respuesta.esCorrecto()) {
+
+                                // --- GUARDAR ID DE USUARIO ---
+                                SharedPreferences prefs = getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putInt("id_usuario", respuesta.getId());
+                                editor.apply();
+                                // -----------------------------
+
                                 Intent intent = new Intent(RegisterActivity.this, ContainerActivity.class);
                                 startActivity(intent);
                                 finish();
