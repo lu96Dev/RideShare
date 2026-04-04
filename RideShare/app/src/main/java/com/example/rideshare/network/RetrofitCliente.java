@@ -18,4 +18,8 @@ public class RetrofitCliente {
     public static UsuarioAPI getUsuarioAPI() {
         return getClient().create(UsuarioAPI.class);
     }
+
+    public static TrayectoAPI getTrayectoAPI() {
+        return getClient().create(TrayectoAPI.class);
+    }
 }
