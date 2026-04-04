@@ -43,18 +43,3 @@ public class SolicitudActualizacion {
     public void setPreferenciasViaje(String preferenciasViaje) { this.preferenciasViaje = preferenciasViaje; }
     public void setFotoPerfil(String fotoPerfil) { this.fotoPerfil = fotoPerfil; }
 }
-
-
-/*
-package com.example.rideshare.dto;
-
-public class SolicitudActualizacion {
-    private String biografia;
-
-    public SolicitudActualizacion(String biografia) {
-        this.biografia = biografia;
-    }
-
-    public String getBiografia() { return biografia; }
-}
- */
