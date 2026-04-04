@@ -2,6 +2,7 @@ package com.rideshare.backend.Controlador;
 
 import com.rideshare.backend.Entidades.Trayecto;
 import com.rideshare.backend.Servicio.TrayectoService;
+import com.rideshare.backend.TransferenciaDatos.TrayectoRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,8 @@ public class TrayectoController {
 
     @PostMapping("/{usuarioId}")
     public Trayecto crear(@PathVariable Integer usuarioId,
-                          @RequestBody Trayecto trayecto) {
-        return trayectoService.crearTrayecto(trayecto, usuarioId);
+                          @RequestBody TrayectoRequest request) {
+        return trayectoService.crearTrayecto(request, usuarioId);
     }
 
     @GetMapping
