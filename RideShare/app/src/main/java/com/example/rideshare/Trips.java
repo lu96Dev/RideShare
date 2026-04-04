@@ -6,11 +6,14 @@ public class Trips {
     private String descripcion;
     private String hora;
 
-    public Trips(String nombre, String tiempo, String descripcion, String hora) {
+    private String distancia;
+
+    public Trips(String nombre, String tiempo, String descripcion, String hora, String distancia) {
         this.nombre = nombre;
         this.tiempo = tiempo;
         this.descripcion = descripcion;
         this.hora = hora;
+        this.distancia = distancia;
     }
 
     // Getters necesarios para el Adaptador
@@ -18,4 +21,7 @@ public class Trips {
     public String getTiempo() { return tiempo; }
     public String getDescripcion() { return descripcion; }
     public String getHora() { return hora; }
+
+    public String getDistancia() { return distancia; }
+
 }

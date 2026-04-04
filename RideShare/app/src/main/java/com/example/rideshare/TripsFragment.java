@@ -21,21 +21,26 @@ public class TripsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trips, container, false);
 
-        // CONFIGURACIÓN CRÍTICA: Buscar el RecyclerView en el layout
         rvViajes = view.findViewById(R.id.rvViajes);
         rvViajes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Datos de prueba
+        // Datos de prueba con el nuevo campo de distancia (km)
         List<Trips> listaPrueba = new ArrayList<>();
-        listaPrueba.add(new Trips("starryskies23", "1d", "No puedo desviarme.", "7:00 AM"));
-        listaPrueba.add(new Trips("emberecho", "1d", "Solo los miercoles y jueves.", "7:30 AM"));
-        listaPrueba.add(new Trips("Bruno", "4d", "Pongo la música fuerte.", "16:00"));
 
-        // Relleno automático para forzar el scroll (10 viajes extra)
+        // Formato: Nombre, Tiempo, Descripción, Hora, Distancia (KM)
+        listaPrueba.add(new Trips("starryskies23", "1d", "No puedo desviarme.", "7:00 AM", "2.5"));
+        listaPrueba.add(new Trips("emberecho", "1d", "Solo los miércoles y jueves.", "7:30 AM", "1.2"));
+        listaPrueba.add(new Trips("Bruno", "4d", "Pongo la música fuerte.", "16:00", "0.5"));
+
+        // Relleno automático con distancias aleatorias o progresivas
         for (int i = 1; i <= 10; i++) {
-            listaPrueba.add(new Trips("Usuario Prueba " + i, i + "d",
-                    "Aqui va una una descripción  " + i,
-                    (8 + i) + ":00"));
+            listaPrueba.add(new Trips(
+                    "Usuario Prueba " + i,
+                    i + "d",
+                    "Aquí va una descripción " + i,
+                    (8 + i) + ":00",
+                    (i + 0.5) + "" // Esto genera distancias como 1.5, 2.5, etc.
+            ));
         }
 
         adaptador = new TripsAdapter(listaPrueba);
