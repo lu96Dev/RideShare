@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/blue">
+
+    <!-- Título del fragmento -->
+    <TextView
+        android:id="@+id/tvTituloMensajes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mensajes"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
+
+    <!-- RecyclerView con mensajes -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerConversaciones"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>
