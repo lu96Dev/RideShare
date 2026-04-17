@@ -19,12 +19,11 @@ public class TrayectoService {
 
     @Transactional
     public Trayecto crearTrayecto(TrayectoRequest request, Integer conductorId) {
-
         // 1. Validar usuario
         usuarioRepository.findById(conductorId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // 2. Crear objeto Trayecto
+        // 2. Crear objeto Trayecto con coordenadas
         Trayecto trayecto = Trayecto.builder()
                 .conductorId(conductorId)
                 .origen(request.getOrigen())
@@ -50,5 +49,10 @@ public class TrayectoService {
             t.setActivo(false);
             trayectoRepository.save(t);
         });
+    }
+
+    // --- NUEVO METODO: SOLUCIONA EL ERROR EN EL CONTROLADOR ---
+    public List<Trayecto> buscarViajesCercanos(Double latitud, Double longitud, Double radioKm) {
+        return trayectoRepository.encontrarTrayectosEnRadio(latitud, longitud, radioKm);
     }
 }
