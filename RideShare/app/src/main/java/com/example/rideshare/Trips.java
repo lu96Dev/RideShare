@@ -25,8 +25,8 @@ public class Trips {
         return (conductor != null) ? conductor.nombre : "Anónimo";
     }
 
-    public String getApellido() {
-        return (conductor != null) ? conductor.apellido : "";
+    public String getApellidos() {
+        return (conductor != null) ? conductor.apellidos : "";
     }
 
     public String getDescripcion() { return descripcion; }
@@ -41,6 +41,6 @@ public class Trips {
     public static class Conductor {
         // Asegúrate de que en tu clase Usuario del backend se llamen así
         public String nombre;
-        public String apellido;
+        public String apellidos;
     }
 }

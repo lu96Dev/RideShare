@@ -29,43 +29,40 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
     public void onBindViewHolder(@NonNull ViajeViewHolder holder, int position) {
         Trips viajeActual = listaViajes.get(position);
 
-        // 1. Lógica de Nombre y Apellidos
+        // 1. CONCATENACIÓN DE NOMBRE Y APELLIDO
         String nombre = viajeActual.getNombre();
-        String apellido = viajeActual.getApellido();
+        String apellido = viajeActual.getApellidos();
 
-        // Si el nombre es null, mostramos un aviso para saber que el objeto conductor no llegó
-        if (nombre == null || nombre.isEmpty()) {
-            holder.tvNombre.setText("Sin nombre (Error Datos)");
+        // Creamos el nombre completo. Si ambos existen, se verán "Juan Pérez"
+        String nombreCompleto = (nombre != null ? nombre : "") + " " + (apellido != null ? apellido : "");
+
+        // .trim() elimina espacios sobrantes si uno de los dos falta
+        String resultadoFinal = nombreCompleto.trim();
+
+        if (resultadoFinal.isEmpty()) {
+            holder.tvNombre.setText("Anónimo");
         } else {
-            holder.tvNombre.setText((nombre + " " + (apellido != null ? apellido : "")).trim());
+            holder.tvNombre.setText(resultadoFinal);
         }
 
-        // 2. Tiempo y Hora
+        // 2. DESCRIPCIÓN (Ocultar si está vacía para evitar el hueco)
+        String desc = viajeActual.getDescripcion();
+        if (desc == null || desc.trim().isEmpty() || desc.equalsIgnoreCase("null")) {
+            holder.tvDescripcion.setVisibility(View.GONE);
+        } else {
+            holder.tvDescripcion.setVisibility(View.VISIBLE);
+            holder.tvDescripcion.setText(desc);
+        }
+
+        // 3. RESTO DE CAMPOS (Tiempo, Hora, Distancia)
         holder.tvTiempo.setText(viajeActual.getTiempo());
         holder.tvHora.setText("Salida a las " + viajeActual.getHora());
 
-        // 3. Descripción (FORZANDO ELIMINACIÓN DE HUECO)
-        String descripcion = viajeActual.getDescripcion();
-
-        // Comprobamos si es null, vacío o literalmente la palabra "null" (a veces pasa con APIs)
-        if (descripcion == null || descripcion.trim().isEmpty() || descripcion.equalsIgnoreCase("null")) {
-            holder.tvDescripcion.setVisibility(View.GONE);
-
-            // TRUCO EXTRA: Re-anclamos la distancia directamente al nombre para que suba
-            // Esto solo es necesario si el ConstraintLayout se resiste
-        } else {
-            holder.tvDescripcion.setVisibility(View.VISIBLE);
-            holder.tvDescripcion.setText(descripcion);
-        }
-
-        // 4. Distancia
-        if (viajeActual.getDistancia() != null && !viajeActual.getDistancia().equals("0.0")) {
+        if (viajeActual.getDistancia() != null) {
             holder.tvDistancia.setText("A " + viajeActual.getDistancia() + " km de ti");
-        } else {
-            holder.tvDistancia.setText("Calculando...");
         }
 
-        // 5. Chat
+        // 4. EVENTO CLICK CHAT
         holder.ivChat.setOnClickListener(v -> {
             if (v.getContext() instanceof ContainerActivity) {
                 ((ContainerActivity) v.getContext()).irAlChat();
