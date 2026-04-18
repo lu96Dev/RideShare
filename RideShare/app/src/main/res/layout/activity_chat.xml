@@ -2,47 +2,35 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_azul"> <!-- Fondo azul para toda la página -->
+    android:background="@drawable/fondo_azul">
 
-    <!-- Barra superior azul claro -->
+    <!-- HEADER -->
     <LinearLayout
-        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="93dp"
+        android:layout_height="70dp"
         android:background="#2175F3"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <ImageView
-            android:id="@+id/imgUsuario"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/caja_redonda"
-            android:clipToOutline="true"
-            android:outlineProvider="background"
-            android:scaleType="centerCrop" />
+        android:padding="12dp">
 
         <TextView
             android:id="@+id/nombreUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Nombre"
-            android:textColor="@color/white"
+            android:text="Chat"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
-    <!-- RecyclerView -->
+    <!-- MENSAJES -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMensajes"
         android:layout_width="match_parent"
-        android:layout_height="562dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="8dp" />
+        android:padding="8dp"/>
 
-    <!-- Caja de mensaje -->
+    <!-- INPUT -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,8 +41,8 @@
         <EditText
             android:id="@+id/editMensaje"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:hint="Escribe un mensaje..."
             android:background="@drawable/chat_redondeado"
             android:padding="10dp"/>
@@ -63,8 +51,7 @@
             android:id="@+id/btnEnviar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enviar"
-            android:backgroundTint="@color/blue"
-            android:layout_marginStart="8dp"/>
+            android:text="Enviar"/>
     </LinearLayout>
+
 </LinearLayout>

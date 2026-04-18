@@ -13,7 +13,7 @@ import com.example.rideshare.R;
 import com.example.rideshare.ui.adapters.SectionsPagerAdapter;
 import com.example.rideshare.model.Trip;
 import com.example.rideshare.ui.fragments.TripsFragment;
-import com.example.rideshare.ui.fragments.ChatFragment;
+import com.example.rideshare.ui.fragments.ChatsFragment;
 import com.example.rideshare.ui.fragments.ProfileFragment;
 import com.example.rideshare.ui.fragments.PublicationFragment;
 import com.example.rideshare.ui.fragments.SearchFragment;
@@ -47,7 +47,7 @@ public class ContainerActivity extends AppCompatActivity {
         List<Fragment> fragments = Arrays.asList(
                 new SearchFragment(),
                 new ProfileFragment(),
-                new ChatFragment(),
+                new ChatsFragment(),
                 new PublicationFragment()
         );
 

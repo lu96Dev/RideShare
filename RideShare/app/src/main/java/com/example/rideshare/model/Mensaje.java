@@ -2,50 +2,37 @@ package com.example.rideshare.model;
 
 public class Mensaje {
 
-    private String texto;
-    private String usuario;
-    private String receptor;
-    private long fecha;
+    private Integer id;
+    private Integer remitenteId;
+    private Integer destinatarioId;
+    private Integer trayectoId;
 
-    public Mensaje() {
-    }
+    private String contenido;
+    private String fechaEnvio;
+    private Boolean leido;
 
-    public Mensaje(String texto, String usuario, String receptor) {
-        this.texto = texto;
-        this.usuario = usuario;
-        this.receptor = receptor;
-        this.fecha = System.currentTimeMillis();
-    }
+    // ===== constructor vacío =====
+    public Mensaje() {}
 
-    public String getTexto() {
-        return texto;
-    }
+    // ===== getters & setters =====
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public String getUsuario() {
-        return usuario;
-    }
+    public Integer getRemitenteId() { return remitenteId; }
+    public void setRemitenteId(Integer remitenteId) { this.remitenteId = remitenteId; }
 
-    public String getReceptor() {
-        return receptor;
-    }
+    public Integer getDestinatarioId() { return destinatarioId; }
+    public void setDestinatarioId(Integer destinatarioId) { this.destinatarioId = destinatarioId; }
 
-    public long getFecha() {
-        return fecha;
-    }
+    public Integer getTrayectoId() { return trayectoId; }
+    public void setTrayectoId(Integer trayectoId) { this.trayectoId = trayectoId; }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
+    public String getContenido() { return contenido; }
+    public void setContenido(String contenido) { this.contenido = contenido; }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
+    public String getFechaEnvio() { return fechaEnvio; }
+    public void setFechaEnvio(String fechaEnvio) { this.fechaEnvio = fechaEnvio; }
 
-    public void setReceptor(String receptor) {
-        this.receptor = receptor;
-    }
-
-    public void setFecha(long fecha) {
-        this.fecha = fecha;
-    }
+    public Boolean getLeido() { return leido; }
+    public void setLeido(Boolean leido) { this.leido = leido; }
 }
