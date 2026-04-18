@@ -16,16 +16,16 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".ContainerActivity"
+            android:name=".ui.activities.ContainerActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
         </activity>
 
         <activity
-            android:name=".MapaPantallaCompletaActivity"
+            android:name=".ui.activities.MapaPantallaCompletaActivity"
             android:exported="false" />
 
         <meta-data
