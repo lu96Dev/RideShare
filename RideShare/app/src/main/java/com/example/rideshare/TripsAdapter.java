@@ -20,7 +20,6 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
     @NonNull
     @Override
     public ViajeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflamos el layout de la tarjeta corregida
         View vista = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_resultado_viaje, parent, false);
         return new ViajeViewHolder(vista);
@@ -30,20 +29,43 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
     public void onBindViewHolder(@NonNull ViajeViewHolder holder, int position) {
         Trips viajeActual = listaViajes.get(position);
 
-        // Seteamos los datos en los componentes
-        holder.tvNombre.setText(viajeActual.getNombre());
+        // 1. CONCATENACIÓN DE NOMBRE Y APELLIDO
+        String nombre = viajeActual.getNombre();
+        String apellido = viajeActual.getApellidos();
+
+        // Creamos el nombre completo. Si ambos existen, se verán "Juan Pérez"
+        String nombreCompleto = (nombre != null ? nombre : "") + " " + (apellido != null ? apellido : "");
+
+        // .trim() elimina espacios sobrantes si uno de los dos falta
+        String resultadoFinal = nombreCompleto.trim();
+
+        if (resultadoFinal.isEmpty()) {
+            holder.tvNombre.setText("Anónimo");
+        } else {
+            holder.tvNombre.setText(resultadoFinal);
+        }
+
+        // 2. DESCRIPCIÓN (Ocultar si está vacía para evitar el hueco)
+        String desc = viajeActual.getDescripcion();
+        if (desc == null || desc.trim().isEmpty() || desc.equalsIgnoreCase("null")) {
+            holder.tvDescripcion.setVisibility(View.GONE);
+        } else {
+            holder.tvDescripcion.setVisibility(View.VISIBLE);
+            holder.tvDescripcion.setText(desc);
+        }
+
+        // 3. RESTO DE CAMPOS (Tiempo, Hora, Distancia)
         holder.tvTiempo.setText(viajeActual.getTiempo());
-        holder.tvDescripcion.setText(viajeActual.getDescripcion());
         holder.tvHora.setText("Salida a las " + viajeActual.getHora());
-        holder.tvDistancia.setText("A " + viajeActual.getDistancia() + " km de ti");
-        // Evento de clic para ir al chat
-        holder.ivChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getContext() instanceof ContainerActivity) {
-                    // Llamamos al metodo de la actividad para cambiar de pestaña
-                    ((ContainerActivity) v.getContext()).irAlChat();
-                }
+
+        if (viajeActual.getDistancia() != null) {
+            holder.tvDistancia.setText("A " + viajeActual.getDistancia() + " km de ti");
+        }
+
+        // 4. EVENTO CLICK CHAT
+        holder.ivChat.setOnClickListener(v -> {
+            if (v.getContext() instanceof ContainerActivity) {
+                ((ContainerActivity) v.getContext()).irAlChat();
             }
         });
     }
@@ -59,8 +81,6 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
 
         public ViajeViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            // Enlazamos con los IDs exactos del XML corregido
             tvNombre = itemView.findViewById(R.id.tvNombreBusqueda);
             tvTiempo = itemView.findViewById(R.id.tvTiempo);
             tvDescripcion = itemView.findViewById(R.id.tvDescripcionViaje);

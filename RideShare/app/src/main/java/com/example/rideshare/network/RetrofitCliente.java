@@ -23,3 +23,4 @@ public class RetrofitCliente {
         return getClient().create(TrayectoAPI.class);
     }
 }
+}

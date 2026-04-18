@@ -12,10 +12,14 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.ArrayList; // Añadido
 import java.util.Arrays;
 import java.util.List;
 
 public class ContainerActivity extends AppCompatActivity {
+
+    // NUEVO: Variable para almacenar los viajes encontrados y compartirlos con el fragmento
+    private List<Trips> listaViajesResultados = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,23 +61,28 @@ public class ContainerActivity extends AppCompatActivity {
                 }
         ).attach();
     }
-    public void mostrarResultados() {
-        // añade el fragmento de resultados sobre el layout principal (main)
+
+    // MODIFICADO: Ahora recibe la lista de viajes por parámetro
+    public void mostrarResultados(List<Trips> viajesEncontrados) {
+        // Guardamos los datos recibidos en la variable de la clase
+        this.listaViajesResultados = viajesEncontrados;
+
         TripsFragment tripsFragment = new TripsFragment();
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.main, tripsFragment)
-                .addToBackStack(null)          // Esto permite volver atrás con el botón del móvil
+                .addToBackStack(null)
                 .commit();
     }
+    public List<Trips> getListaViajesResultados() {
+        return listaViajesResultados;
+    }
+
     public void irAlChat() {
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         if (viewPager != null) {
             viewPager.setCurrentItem(2, true);
-
-            // y vuelvas a la pantalla de búsqueda "debajo", quita el comentario a la siguiente línea:
             getSupportFragmentManager().popBackStack();
         }
     }
-
 }
