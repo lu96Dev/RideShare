@@ -1,5 +1,6 @@
 package com.example.rideshare;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHolder> {
@@ -25,18 +31,39 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
         return new ViajeViewHolder(vista);
     }
 
+    private String calcularTiempoRelativo(String fechaStr, String horaStr) {
+        try {
+            LocalDate fecha = LocalDate.parse(fechaStr); // Formato esperado "2026-04-18"
+            LocalTime hora = LocalTime.parse(horaStr);   // Formato esperado "17:31:00"
+
+            LocalDateTime fechaViaje = LocalDateTime.of(fecha, hora);
+            LocalDateTime ahora = LocalDateTime.now();
+
+            // Calculamos la diferencia
+            long dias = ChronoUnit.DAYS.between(fechaViaje, ahora);
+            long horas = ChronoUnit.HOURS.between(fechaViaje, ahora);
+            long minutos = ChronoUnit.MINUTES.between(fechaViaje, ahora);
+
+            if (dias > 0) return dias + "d";
+            if (horas > 0) return horas + "h";
+            if (minutos > 0) return minutos + "m";
+            return "Ahora";
+
+        } catch (Exception e) {
+            // Si hay algún error en el formato, devolvemos cadena vacía
+            return "";
+        }
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViajeViewHolder holder, int position) {
         Trips viajeActual = listaViajes.get(position);
 
-        // 1. CONCATENACIÓN DE NOMBRE Y APELLIDO
+        // 1. NOMBRE Y APELLIDO
         String nombre = viajeActual.getNombre();
-        String apellido = viajeActual.getApellidos();
+        String apellido = viajeActual.getApellidos(); // Usando getApellidos() como en tu código
 
-        // Creamos el nombre completo. Si ambos existen, se verán "Juan Pérez"
         String nombreCompleto = (nombre != null ? nombre : "") + " " + (apellido != null ? apellido : "");
-
-        // .trim() elimina espacios sobrantes si uno de los dos falta
         String resultadoFinal = nombreCompleto.trim();
 
         if (resultadoFinal.isEmpty()) {
@@ -45,7 +72,16 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
             holder.tvNombre.setText(resultadoFinal);
         }
 
-        // 2. DESCRIPCIÓN (Ocultar si está vacía para evitar el hueco)
+        // 2. TIEMPO RELATIVO (Calculado)
+        String tiempoRelativo = calcularTiempoRelativo(viajeActual.getFecha(), viajeActual.getHora());
+        if (!tiempoRelativo.isEmpty()) {
+            holder.tvTiempo.setText(tiempoRelativo);
+            holder.tvTiempo.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvTiempo.setVisibility(View.GONE);
+        }
+
+        // 3. DESCRIPCIÓN
         String desc = viajeActual.getDescripcion();
         if (desc == null || desc.trim().isEmpty() || desc.equalsIgnoreCase("null")) {
             holder.tvDescripcion.setVisibility(View.GONE);
@@ -54,15 +90,16 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
             holder.tvDescripcion.setText(desc);
         }
 
-        // 3. RESTO DE CAMPOS (Tiempo, Hora, Distancia)
-        holder.tvTiempo.setText(viajeActual.getTiempo());
+        // 4. HORA Y DISTANCIA
         holder.tvHora.setText("Salida a las " + viajeActual.getHora());
 
         if (viajeActual.getDistancia() != null) {
             holder.tvDistancia.setText("A " + viajeActual.getDistancia() + " km de ti");
+        } else {
+            holder.tvDistancia.setText("Distancia no disponible");
         }
 
-        // 4. EVENTO CLICK CHAT
+        // 5. EVENTO CLICK CHAT
         holder.ivChat.setOnClickListener(v -> {
             if (v.getContext() instanceof ContainerActivity) {
                 ((ContainerActivity) v.getContext()).irAlChat();

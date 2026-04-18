@@ -47,13 +47,17 @@ android {
     }
 
     compileOptions {
+        // --- CAMBIO PARA EL DESUGARING ---
+        isCoreLibraryDesugaringEnabled = true
+        // ---------------------------------
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
 dependencies {
-
+    // --- CAMBIO PARA EL DESUGARING ---
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")

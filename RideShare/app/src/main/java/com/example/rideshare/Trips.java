@@ -19,6 +19,8 @@ public class Trips {
 
     private String distancia;
 
+    private String fecha;
+
     public Trips() {}
 
     public String getNombre() {
@@ -37,6 +39,8 @@ public class Trips {
     public Double getLongitud() { return longitud; }
 
     public void setDistancia(String distancia) { this.distancia = distancia; }
+
+    public String getFecha() {return fecha;}
 
     public static class Conductor {
         // Asegúrate de que en tu clase Usuario del backend se llamen así
