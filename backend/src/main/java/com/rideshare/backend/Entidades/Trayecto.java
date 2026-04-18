@@ -60,13 +60,6 @@ public class Trayecto {
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
-
-    @Column(nullable = false)
-    private Double origenLat;
-
-    @Column(nullable = false)
-    private Double origenLng;
-
     @PrePersist
     protected void onCreate() {
         fechaCreacion = LocalDateTime.now();
