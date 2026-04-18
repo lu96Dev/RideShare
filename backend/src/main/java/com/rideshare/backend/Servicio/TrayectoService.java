@@ -19,11 +19,13 @@ public class TrayectoService {
 
     @Transactional
     public Trayecto crearTrayecto(TrayectoRequest request, Integer conductorId) {
+
         // 1. Validar usuario
         usuarioRepository.findById(conductorId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         // 2. Crear objeto Trayecto con coordenadas
+        // 2. Crear objeto Trayecto
         Trayecto trayecto = Trayecto.builder()
                 .conductorId(conductorId)
                 .origen(request.getOrigen())

@@ -43,6 +43,7 @@ public class Trayecto {
     @Column(nullable = false)
     private String descripcion;
 
+    // Anuncio activo o cerrado
     @Builder.Default
     @Column(nullable = false)
     private Boolean activo = true;
@@ -58,6 +59,13 @@ public class Trayecto {
 
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
+
+
+    @Column(nullable = false)
+    private Double origenLat;
+
+    @Column(nullable = false)
+    private Double origenLng;
 
     @PrePersist
     protected void onCreate() {
