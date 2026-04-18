@@ -5,6 +5,8 @@ import com.example.rideshare.dto.RespuestaTrayecto;
 import com.example.rideshare.dto.SolicitudTrayecto;
 import com.example.rideshare.dto.SolicitudBusquedaTrayecto;
 
+import com.example.rideshare.dto.RespuestaTrayecto;
+import com.example.rideshare.dto.SolicitudTrayecto;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
