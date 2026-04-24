@@ -19,29 +19,20 @@ public class MensajeController {
         return service.enviarMensaje(mensaje);
     }
 
-    @GetMapping("/{trayectoId}/{usuarioId}")
-    public List<Mensaje> obtener(
-            @PathVariable Integer trayectoId,
-            @PathVariable Integer usuarioId,
-            @RequestParam(required = false) Integer ultimoId) {
+    @GetMapping("/{chatId}")
+    public List<Mensaje> obtener(@PathVariable Integer chatId,
+                                 @RequestParam(required = false) Integer ultimoId) {
 
         if (ultimoId == null) {
-            return service.obtenerMensajes(trayectoId, usuarioId);
+            return service.obtenerMensajes(chatId);
         } else {
-            return service.obtenerMensajesNuevos(trayectoId, usuarioId, ultimoId);
+            return service.obtenerMensajesNuevos(chatId, ultimoId);
         }
     }
 
-
-    @GetMapping("/chats/{usuarioId}")
-    public List<Mensaje> obtenerChats(@PathVariable Integer usuarioId) {
-        return service.obtenerChatsUsuario(usuarioId);
-    }
-
-
-    @PutMapping("/{trayectoId}/leidos/{usuarioId}")
-    public void marcarLeidos(@PathVariable Integer trayectoId,
+    @PutMapping("/{chatId}/leidos/{usuarioId}")
+    public void marcarLeidos(@PathVariable Integer chatId,
                              @PathVariable Integer usuarioId) {
-        service.marcarComoLeidos(trayectoId, usuarioId);
+        service.marcarComoLeidos(chatId, usuarioId);
     }
 }
