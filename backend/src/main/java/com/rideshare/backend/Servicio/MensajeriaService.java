@@ -16,13 +16,22 @@ public class MensajeriaService {
 
     @Transactional
     public Mensaje enviarMensaje(Mensaje mensaje) {
+        if (mensaje.getLeido() == null) {
+            mensaje.setLeido(false);
+        }
         return mensajeRepository.save(mensaje);
+    }
+
+    public List<Mensaje> obtenerChatsUsuario(Integer usuarioId) {
+        return mensajeRepository.findChatsUsuario(usuarioId);
     }
 
     public List<Mensaje> obtenerMensajes(Integer trayectoId, Integer usuarioId) {
         return mensajeRepository.findMensajesByTrayectoAndUsuario(trayectoId, usuarioId);
     }
-
+    public List<Mensaje> obtenerMensajesNuevos(Integer trayectoId, Integer usuarioId, Integer ultimoId) {
+        return mensajeRepository.findMensajesNuevos(trayectoId, usuarioId, ultimoId);
+    }
     @Transactional
     public void marcarComoLeidos(Integer trayectoId, Integer usuarioId) {
         List<Mensaje> mensajes = mensajeRepository.findMensajesByTrayectoAndUsuario(trayectoId, usuarioId);
