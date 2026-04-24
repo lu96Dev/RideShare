@@ -24,6 +24,7 @@ public class TrayectoService {
         usuarioRepository.findById(conductorId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
+        // 2. Crear objeto Trayecto con coordenadas
         // 2. Crear objeto Trayecto
         Trayecto trayecto = Trayecto.builder()
                 .conductorId(conductorId)
@@ -50,5 +51,10 @@ public class TrayectoService {
             t.setActivo(false);
             trayectoRepository.save(t);
         });
+    }
+
+    // --- NUEVO METODO: SOLUCIONA EL ERROR EN EL CONTROLADOR ---
+    public List<Trayecto> buscarViajesCercanos(Double latitud, Double longitud, Double radioKm) {
+        return trayectoRepository.encontrarTrayectosEnRadio(latitud, longitud, radioKm);
     }
 }

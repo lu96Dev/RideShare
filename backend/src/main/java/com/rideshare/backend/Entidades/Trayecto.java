@@ -20,7 +20,11 @@ public class Trayecto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // Usuario que publica el anuncio
+    // --- RELACIÓN AÑADIDA PARA TRAER AL USUARIO ---
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conductor_id", insertable = false, updatable = false)
+    private Usuario conductor;
+
     @Column(name = "conductor_id", nullable = false)
     private Integer conductorId;
 
@@ -44,18 +48,17 @@ public class Trayecto {
     @Column(nullable = false)
     private Boolean activo = true;
 
+    @Column(name = "origen_lat", nullable = false)
+    private Double origenLat;
+
+    @Column(name = "origen_lng", nullable = false)
+    private Double origenLng;
+
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
-
-
-    @Column(nullable = false)
-    private Double origenLat;
-
-    @Column(nullable = false)
-    private Double origenLng;
 
     @PrePersist
     protected void onCreate() {
