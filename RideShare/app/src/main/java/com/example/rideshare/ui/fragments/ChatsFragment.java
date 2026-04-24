@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rideshare.R;
+import com.example.rideshare.data.network.ChatAPI;
 import com.example.rideshare.data.network.MensajeAPI;
 import com.example.rideshare.data.network.RetrofitCliente;
 import com.example.rideshare.model.ChatPreview;
@@ -34,7 +35,7 @@ public class ChatsFragment extends Fragment {
     private ChatListAdapter adapter;
 
     private int usuarioId;
-    private MensajeAPI api;
+    private ChatAPI api;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class ChatsFragment extends Fragment {
 
         usuarioId = prefs.getInt("id_usuario", -1);
 
-        api = RetrofitCliente.getClient().create(MensajeAPI.class);
+        api = RetrofitCliente.getClient().create(ChatAPI.class);
 
         listaChats = new ArrayList<>();
         adapter = new ChatListAdapter(listaChats, usuarioId, getContext());

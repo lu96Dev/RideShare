@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rideshare.R;
 import com.example.rideshare.model.ChatPreview;
+import com.example.rideshare.ui.activities.ChatActivity;
 
 import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
     private List<ChatPreview> lista;
-    private int usuarioId;
     private Context context;
+    private int usuarioId;
 
     public ChatListAdapter(List<ChatPreview> lista, int usuarioId, Context context) {
         this.lista = lista;
@@ -41,14 +42,22 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         ChatPreview chat = lista.get(position);
 
         holder.nombre.setText(chat.getNombre());
+
+        if (chat.getUnread() != null && chat.getUnread() > 0) {
+            holder.mensaje.setText("● " + chat.getUltimoMensaje());
+        } else {
+            holder.mensaje.setText(chat.getUltimoMensaje());
+        }
         holder.mensaje.setText(chat.getUltimoMensaje());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, com.example.rideshare.ui.activities.ChatActivity.class);
-            intent.putExtra("trayectoId", chat.getTrayectoId());
-            intent.putExtra("otroUsuarioId", chat.getOtroUsuarioId());
-            intent.putExtra("nombre", chat.getNombre());
-            context.startActivity(intent);
+            Intent i = new Intent(context, ChatActivity.class);
+
+            i.putExtra("chatId", chat.getChatId());
+            i.putExtra("otroUsuarioId", chat.getOtroUsuarioId());
+            i.putExtra("nombre", chat.getNombre());
+
+            context.startActivity(i);
         });
     }
 
@@ -58,9 +67,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView nombre, mensaje;
 
-        ViewHolder(View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             nombre = itemView.findViewById(R.id.nombreChat);
             mensaje = itemView.findViewById(R.id.mensajeChat);

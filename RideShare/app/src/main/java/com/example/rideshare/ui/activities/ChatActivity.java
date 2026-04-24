@@ -3,11 +3,7 @@ package com.example.rideshare.ui.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,14 +29,13 @@ public class ChatActivity extends AppCompatActivity {
     private Button btnSend;
     private TextView titulo;
 
+    private MensajeAPI api;
     private MensajeAdapter adapter;
     private ArrayList<Mensaje> mensajes = new ArrayList<>();
 
-    private MensajeAPI api;
     private int usuarioId;
-    private int trayectoId;
+    private int chatId;
     private int otroUsuarioId;
-    private String nombre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +50,14 @@ public class ChatActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE);
         usuarioId = prefs.getInt("id_usuario", -1);
 
-        trayectoId = getIntent().getIntExtra("trayectoId", -1);
+        chatId = getIntent().getIntExtra("chatId", -1);
         otroUsuarioId = getIntent().getIntExtra("otroUsuarioId", -1);
-        nombre = getIntent().getStringExtra("nombre");
 
-        titulo.setText(nombre);
+        if (chatId == -1) {
+            Toast.makeText(this, "Chat inválido", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         api = RetrofitCliente.getClient().create(MensajeAPI.class);
 
@@ -72,54 +70,81 @@ public class ChatActivity extends AppCompatActivity {
         recycler.setAdapter(adapter);
 
         cargarMensajes();
+        marcarLeidos();
 
         btnSend.setOnClickListener(v -> enviarMensaje());
     }
 
     private void cargarMensajes() {
-        api.obtenerMensajes(trayectoId, usuarioId).enqueue(new Callback<List<Mensaje>>() {
+
+        api.obtenerMensajes(chatId, null).enqueue(new Callback<List<Mensaje>>() {
             @Override
             public void onResponse(Call<List<Mensaje>> call, Response<List<Mensaje>> response) {
+
                 if (response.isSuccessful() && response.body() != null) {
+
                     mensajes.clear();
                     mensajes.addAll(response.body());
+
                     adapter.notifyDataSetChanged();
-                    recycler.scrollToPosition(mensajes.size() - 1);
+
+                    if (!mensajes.isEmpty()) {
+                        recycler.scrollToPosition(mensajes.size() - 1);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Mensaje>> call, Throwable t) {
-                Toast.makeText(ChatActivity.this, "Error cargando mensajes", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this,
+                        "Error cargando mensajes",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void enviarMensaje() {
+
         String texto = input.getText().toString().trim();
         if (texto.isEmpty()) return;
 
         Mensaje m = new Mensaje();
-        m.setContenido(texto);
+        m.setChatId(chatId);
         m.setRemitenteId(usuarioId);
-        m.setDestinatarioId(otroUsuarioId);
-        m.setTrayectoId(trayectoId);
+        m.setContenido(texto);
 
         api.enviarMensaje(m).enqueue(new Callback<Mensaje>() {
             @Override
             public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+
                 if (response.isSuccessful() && response.body() != null) {
+
                     mensajes.add(response.body());
                     adapter.notifyItemInserted(mensajes.size() - 1);
+
                     recycler.scrollToPosition(mensajes.size() - 1);
+
                     input.setText("");
                 }
             }
 
             @Override
             public void onFailure(Call<Mensaje> call, Throwable t) {
-                Toast.makeText(ChatActivity.this, "Error enviando mensaje", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this,
+                        "Error enviando mensaje",
+                        Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    private void marcarLeidos() {
+
+        api.marcarLeidos(chatId, usuarioId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {}
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {}
         });
     }
 }
