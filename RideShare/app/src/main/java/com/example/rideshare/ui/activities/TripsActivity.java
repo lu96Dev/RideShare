@@ -20,7 +20,7 @@ public class TripsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_trips);
+        setContentView(R.layout.activity_trips);
 
         rvViajes = findViewById(R.id.rvViajes);
 
