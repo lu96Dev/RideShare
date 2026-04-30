@@ -6,17 +6,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MensajeriaRepository extends JpaRepository<Mensaje, Integer> {
 
-    List<Mensaje> findByChatIdOrderByFechaEnvioAsc(Integer chatId);
+    @Query("SELECT m FROM Mensaje m WHERE m.chat.id = :chatId ORDER BY m.fechaEnvio ASC")
+    List<Mensaje> findByChatIdOrderByFechaEnvioAsc(@Param("chatId") Integer chatId);
 
+    @Query("SELECT m FROM Mensaje m WHERE m.chat.id = :chatId AND m.id > :ultimoId ORDER BY m.fechaEnvio ASC")
     List<Mensaje> findByChatIdAndIdGreaterThanOrderByFechaEnvioAsc(
-            Integer chatId,
-            Integer ultimoId
+            @Param("chatId") Integer chatId,
+            @Param("ultimoId") Integer ultimoId
     );
 
-    Mensaje findTopByChatIdOrderByFechaEnvioDesc(Integer chatId);
+    // ← CORREGIDO: devuelve Optional<Mensaje> con LIMIT 1
+    @Query("SELECT m FROM Mensaje m WHERE m.chat.id = :chatId ORDER BY m.fechaEnvio DESC LIMIT 1")
+    Optional<Mensaje> findTopByChatIdOrderByFechaEnvioDesc(@Param("chatId") Integer chatId);
 
     @Query("""
     SELECT COUNT(m)

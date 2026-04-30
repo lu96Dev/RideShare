@@ -29,7 +29,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/error").permitAll()
 
-
+                        .requestMatchers("/api/mensajes/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

@@ -1,7 +1,7 @@
 package com.rideshare.backend.Controlador;
 
-import com.rideshare.backend.Entidades.Mensaje;
 import com.rideshare.backend.Servicio.MensajeriaService;
+import com.rideshare.backend.TransferenciaDatos.MensajeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +15,13 @@ public class MensajeController {
     private final MensajeriaService service;
 
     @PostMapping
-    public Mensaje enviar(@RequestBody Mensaje mensaje) {
+    public MensajeDTO enviar(@RequestBody MensajeDTO mensaje) {
         return service.enviarMensaje(mensaje);
     }
 
     @GetMapping("/{chatId}")
-    public List<Mensaje> obtener(@PathVariable Integer chatId,
-                                 @RequestParam(required = false) Integer ultimoId) {
+    public List<MensajeDTO> obtener(@PathVariable Integer chatId,
+                                    @RequestParam(required = false) Integer ultimoId) {
 
         if (ultimoId == null) {
             return service.obtenerMensajes(chatId);

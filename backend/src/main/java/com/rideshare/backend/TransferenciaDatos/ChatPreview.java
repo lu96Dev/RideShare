@@ -13,4 +13,5 @@ public class ChatPreview {
     private String nombre;
     private String ultimoMensaje;
     private Long unreadCount;
+    private String fotoPerfil;
 }
