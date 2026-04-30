@@ -5,7 +5,6 @@ public class Mensaje {
     private Integer id;
     private Integer chatId;
     private Integer remitenteId;
-
     private String contenido;
     private String fechaEnvio;
     private Boolean leido;

@@ -7,9 +7,8 @@ public class ChatPreview {
     private Integer otroUsuarioId;
     private String nombre;
     private String ultimoMensaje;
-
-    // 🔥 NUEVO: mensajes no leídos
-    private Long unread;
+    private Long unreadCount;
+    private String fotoPerfil;
 
     public ChatPreview() {}
 
@@ -28,7 +27,9 @@ public class ChatPreview {
     public String getUltimoMensaje() { return ultimoMensaje; }
     public void setUltimoMensaje(String ultimoMensaje) { this.ultimoMensaje = ultimoMensaje; }
 
-    // 🔥 UNREAD
-    public Long getUnread() { return unread; }
-    public void setUnread(Long unread) { this.unread = unread; }
+    public Long getUnreadCount() { return unreadCount; }
+    public void setUnreadCount(Long unreadCount) { this.unreadCount = unreadCount; }
+
+    public String getFotoPerfil() { return fotoPerfil; }
+    public void setFotoPerfil(String fotoPerfil) { this.fotoPerfil = fotoPerfil; }
 }
