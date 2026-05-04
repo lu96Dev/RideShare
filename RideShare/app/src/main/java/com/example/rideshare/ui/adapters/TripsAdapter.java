@@ -53,6 +53,8 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
                         (viajeActual.getApellidos() != null ? viajeActual.getApellidos() : "")
         ).trim();
 
+        final String nombreCompletoFinal = nombreCompleto;
+
         // Obtener el id del usuario actual
         int usuarioActualId = holder.itemView.getContext()
                 .getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE)
@@ -128,6 +130,8 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
                         Intent intent = new Intent(context, ChatActivity.class);
                         intent.putExtra("chatId", chat.getId());
                         intent.putExtra("otroUsuarioId", otroUsuarioId);
+                        intent.putExtra("nombre", nombreCompletoFinal);
+                        intent.putExtra("fotoPerfil", holder.fotoConductorBase64);
 
                         context.startActivity(intent);
 
@@ -163,6 +167,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
 
         TextView tvNombre, tvTiempo, tvDescripcion, tvHora, tvDistancia;
         ImageView ivPerfil, ivChat;
+        String fotoConductorBase64;
 
         public ViajeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -188,6 +193,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
                     public void onResponse(Call<RespuestaInicio> call, Response<RespuestaInicio> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             String base64 = response.body().getFotoPerfil();
+                            holder.fotoConductorBase64 = base64;
                             cargarImagenDesdeBase64(holder.ivPerfil, base64);
                         }
                     }
