@@ -118,8 +118,12 @@ public class ChatActivity extends AppCompatActivity {
 
         // Enviar también con el botón "Send" del teclado
         input.setOnEditorActionListener((v, actionId, event) -> {
-            enviarMensaje();
-            return true;
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEND
+                    || actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                enviarMensaje();
+                return true;
+            }
+            return false;
         });
     }
 

@@ -63,6 +63,12 @@ public class ChatsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        cargarChats();
+    }
+
     private void cargarChats() {
 
         api.obtenerChats(usuarioId).enqueue(new Callback<List<ChatPreview>>() {

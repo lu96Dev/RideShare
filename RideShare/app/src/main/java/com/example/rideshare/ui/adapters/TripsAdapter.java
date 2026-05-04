@@ -93,6 +93,12 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
 
             int otroUsuarioId = viajeActual.getConductorId();
 
+            // Si el trayecto es del propio usuario, no hace nada
+            if (otroUsuarioId == usuarioActualId) {
+                Toast.makeText(context, "No puedes chatear contigo mismo", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (usuarioActualId == -1 || otroUsuarioId == -1) {
                 Toast.makeText(context, "Error de usuario", Toast.LENGTH_SHORT).show();
                 return;
