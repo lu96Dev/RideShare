@@ -8,6 +8,7 @@ import com.rideshare.backend.TransferenciaDatos.ChatPreview;
 import com.rideshare.backend.TransferenciaDatos.ChatRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -58,5 +59,11 @@ public class ChatService {
         }
 
         return previews;
+    }
+
+    @Transactional
+    public void eliminarChat(Integer chatId) {
+        mensajeriaRepository.deleteByChatId(chatId); // primero los mensajes
+        chatRepository.deleteById(chatId);            // luego el chat
     }
 }

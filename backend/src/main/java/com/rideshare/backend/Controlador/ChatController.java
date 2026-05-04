@@ -5,6 +5,7 @@ import com.rideshare.backend.Servicio.ChatService;
 import com.rideshare.backend.TransferenciaDatos.ChatRequest;
 import com.rideshare.backend.TransferenciaDatos.ChatPreview;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,5 +25,11 @@ public class ChatController {
     @GetMapping("/{usuarioId}")
     public List<ChatPreview> listar(@PathVariable Integer usuarioId) {
         return chatService.getChatsUsuario(usuarioId);
+    }
+
+    @DeleteMapping("/{chatId}")
+    public ResponseEntity<Void> eliminarChat(@PathVariable Integer chatId) {
+        chatService.eliminarChat(chatId);
+        return ResponseEntity.noContent().build();
     }
 }
