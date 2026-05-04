@@ -1,6 +1,7 @@
 package com.example.rideshare.ui.activities;
 
 import android.os.Bundle;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -11,23 +12,17 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.rideshare.R;
 import com.example.rideshare.ui.adapters.SectionsPagerAdapter;
-import com.example.rideshare.model.Trip;
-import com.example.rideshare.ui.fragments.TripsFragment;
-import com.example.rideshare.ui.fragments.ChatFragment;
+import com.example.rideshare.ui.fragments.ChatsFragment;
 import com.example.rideshare.ui.fragments.ProfileFragment;
 import com.example.rideshare.ui.fragments.PublicationFragment;
 import com.example.rideshare.ui.fragments.SearchFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.ArrayList; // Añadido
 import java.util.Arrays;
 import java.util.List;
 
 public class ContainerActivity extends AppCompatActivity {
-
-    // NUEVO: Variable para almacenar los viajes encontrados y compartirlos con el fragmento
-    private List<Trip> listaViajesResultados = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +42,7 @@ public class ContainerActivity extends AppCompatActivity {
         List<Fragment> fragments = Arrays.asList(
                 new SearchFragment(),
                 new ProfileFragment(),
-                new ChatFragment(),
+                new ChatsFragment(),
                 new PublicationFragment()
         );
 
@@ -70,27 +65,11 @@ public class ContainerActivity extends AppCompatActivity {
         ).attach();
     }
 
-    // MODIFICADO: Ahora recibe la lista de viajes por parámetro
-    public void mostrarResultados(List<Trip> viajesEncontrados) {
-        // Guardamos los datos recibidos en la variable de la clase
-        this.listaViajesResultados = viajesEncontrados;
-
-        TripsFragment tripsFragment = new TripsFragment();
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.main, tripsFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-    public List<Trip> getListaViajesResultados() {
-        return listaViajesResultados;
-    }
-
+    // Método para cambiar a la pestaña de chat
     public void irAlChat() {
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         if (viewPager != null) {
             viewPager.setCurrentItem(2, true);
-            getSupportFragmentManager().popBackStack();
         }
     }
 }

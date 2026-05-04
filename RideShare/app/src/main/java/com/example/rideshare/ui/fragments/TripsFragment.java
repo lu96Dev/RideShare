@@ -1,4 +1,4 @@
-package com.example.rideshare.ui.fragments;
+/*package com.example.rideshare.ui.fragments;
 
 import android.os.Bundle;
 import android.util.Log; // Importado para depuración
@@ -56,4 +56,4 @@ public class TripsFragment extends Fragment {
 
         return view;
     }
-}
+}*/
