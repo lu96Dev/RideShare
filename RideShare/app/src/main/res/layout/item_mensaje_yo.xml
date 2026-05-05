@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="end"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="3dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:maxWidth="260dp"
+        android:background="@drawable/bg_burbuja_yo"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp">
+
+        <TextView
+            android:id="@+id/tvMensajeYo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:lineSpacingExtra="2dp"/>
+
+        <TextView
+            android:id="@+id/tvHoraYo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="3dp"
+            android:textSize="10sp"
+            android:textColor="#CCE0FF"/>
+
+    </LinearLayout>
+
+</LinearLayout>

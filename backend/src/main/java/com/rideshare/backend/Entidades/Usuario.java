@@ -34,7 +34,7 @@ public class Usuario {
     private String password;
 
 
-    @Column(name = "foto_perfil")
+    @Column(name = "foto_perfil", columnDefinition = "LONGTEXT")
     private String fotoPerfil;
 
     @Column(columnDefinition = "TEXT")
