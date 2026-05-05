@@ -15,32 +15,46 @@
         android:theme="@style/Theme.RideShare"
         android:usesCleartextTraffic="true">
 
+        <!-- ACTIVITIES -->
+        <activity android:name=".ui.activities.ChatActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.TripsActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.activities.ContainerActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activities.RegisterActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <activity
             android:name=".ui.activities.MapaPantallaCompletaActivity"
             android:exported="false" />
 
+        <!-- Google Maps API KEY -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
+
     </application>
 
 </manifest>

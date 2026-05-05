@@ -6,24 +6,23 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "mensajes")
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Mensaje {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_id", nullable = false)
+    private Chat chat;
+
     @Column(name = "remitente_id", nullable = false)
     private Integer remitenteId;
-
-    @Column(name = "destinatario_id", nullable = false)
-    private Integer destinatarioId;
-
-    @Column(name = "trayecto_id", nullable = false)
-    private Integer trayectoId;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String contenido;

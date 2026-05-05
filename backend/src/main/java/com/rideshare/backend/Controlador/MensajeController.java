@@ -1,7 +1,7 @@
 package com.rideshare.backend.Controlador;
 
-import com.rideshare.backend.Entidades.Mensaje;
 import com.rideshare.backend.Servicio.MensajeriaService;
+import com.rideshare.backend.TransferenciaDatos.MensajeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,19 +15,24 @@ public class MensajeController {
     private final MensajeriaService service;
 
     @PostMapping
-    public Mensaje enviar(@RequestBody Mensaje mensaje) {
+    public MensajeDTO enviar(@RequestBody MensajeDTO mensaje) {
         return service.enviarMensaje(mensaje);
     }
 
-    @GetMapping("/{trayectoId}/{usuarioId}")
-    public List<Mensaje> obtener(@PathVariable Integer trayectoId,
-                                 @PathVariable Integer usuarioId) {
-        return service.obtenerMensajes(trayectoId, usuarioId);
+    @GetMapping("/{chatId}")
+    public List<MensajeDTO> obtener(@PathVariable Integer chatId,
+                                    @RequestParam(required = false) Integer ultimoId) {
+
+        if (ultimoId == null) {
+            return service.obtenerMensajes(chatId);
+        } else {
+            return service.obtenerMensajesNuevos(chatId, ultimoId);
+        }
     }
 
-    @PutMapping("/{trayectoId}/leidos/{usuarioId}")
-    public void marcarLeidos(@PathVariable Integer trayectoId,
+    @PutMapping("/{chatId}/leidos/{usuarioId}")
+    public void marcarLeidos(@PathVariable Integer chatId,
                              @PathVariable Integer usuarioId) {
-        service.marcarComoLeidos(trayectoId, usuarioId);
+        service.marcarComoLeidos(chatId, usuarioId);
     }
 }
