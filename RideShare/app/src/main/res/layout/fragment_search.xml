@@ -41,7 +41,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="112dp"
             android:background="@drawable/input_fondo"
-            android:hint="Desde ..."
+            android:hint="@string/desde"
             android:paddingStart="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +53,7 @@
             android:layout_marginStart="36dp"
             android:layout_marginBottom="76dp"
             android:background="@drawable/boton_gradiante"
-            android:text="Continuar"
+            android:text="@string/continuar"
             android:textColor="@android:color/white"
             android:textSize="16dp"
             app:backgroundTint="@null"
@@ -64,7 +64,7 @@
             android:id="@+id/textView2"
             android:layout_width="286dp"
             android:layout_height="wrap_content"
-            android:text="Indica tu lugar de salida."
+            android:text="@string/indica_salida"
             android:textAlignment="center"
             android:textColor="#E4FF751E"
             android:textSize="18sp"
@@ -81,7 +81,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="112dp"
             android:background="@drawable/input_fondo"
-            android:text="Toca para elegir origen en el mapa"
+            android:text="@string/elegir_origen"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:gravity="center_vertical"
@@ -92,12 +92,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="301dp"
         android:layout_height="72dp"
         android:layout_marginTop="32dp"
-        android:text="Comparte viaje, haz contactos y ahorra junto a tus compañeros con RideShare."
+        android:text="@string/slogan"
         android:textAlignment="center"
         android:textColor="#FF751E"
         android:textSize="19sp"

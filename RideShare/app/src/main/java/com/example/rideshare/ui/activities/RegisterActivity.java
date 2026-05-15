@@ -83,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 botonRegistro.setEnabled(false);
-                botonRegistro.setText("Registrando...");
+                botonRegistro.setText(R.string.registrando);
 
                 SolicitudRegistro solicitud = new SolicitudRegistro(email, password);
 
@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(Call<RespuestaRegistro> call, Response<RespuestaRegistro> response) {
 
                         botonRegistro.setEnabled(true);
-                        botonRegistro.setText("Registrarse");
+                        botonRegistro.setText(R.string.registrarse);
 
                         if (response.isSuccessful() && response.body() != null) {
 
@@ -128,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onFailure(Call<RespuestaRegistro> call, Throwable t) {
 
                         botonRegistro.setEnabled(true);
-                        botonRegistro.setText("Registrarse");
+                        botonRegistro.setText(R.string.registrarse);
 
                         Toast.makeText(RegisterActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
                     }

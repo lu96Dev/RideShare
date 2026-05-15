@@ -97,11 +97,11 @@ public class MapaPantallaCompletaActivity extends AppCompatActivity implements O
                 tvCalleSeleccionada.setText(calleElegida);
             } else {
                 calleElegida = "Ubicación seleccionada";
-                tvCalleSeleccionada.setText("Coordenadas guardadas");
+                tvCalleSeleccionada.setText(R.string.coordenadas_guardadas);
             }
         } catch (Exception e) {
             calleElegida = "Ubicación seleccionada";
-            tvCalleSeleccionada.setText("Ubicación guardada");
+            tvCalleSeleccionada.setText(R.string.ubicacion_guardada);
         }
     }
 }

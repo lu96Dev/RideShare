@@ -11,7 +11,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginTop="32dp"
-         android:text="Compañeros de Trayecto Cercanos"
+         android:text="@string/companeros_trayecto"
          android:textColor="#FFFFFF"
          android:textSize="18sp"
          android:textStyle="bold"

@@ -128,20 +128,20 @@ public class ProfileFragment extends Fragment {
         avatar.setOnClickListener(v -> getContent.launch("image/*"));
 
         // Biografía
-        btnBiblio.setOnClickListener(v -> abrirDialogoEditar("Editar Biografía", resultadoBiblio, "biografia"));
-        resultadoBiblio.setOnClickListener(v -> abrirDialogoEditar("Editar Biografía", resultadoBiblio, "biografia"));
+        btnBiblio.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_bio), resultadoBiblio, "biografia"));
+        resultadoBiblio.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_bio), resultadoBiblio, "biografia"));
 
         // Nombre
-        btnNombre.setOnClickListener(v -> abrirDialogoEditar("Editar Nombre", resultadoNombre, "nombre"));
-        resultadoNombre.setOnClickListener(v -> abrirDialogoEditar("Editar Nombre", resultadoNombre, "nombre"));
+        btnNombre.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_nombre), resultadoNombre, "nombre"));
+        resultadoNombre.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_nombre), resultadoNombre, "nombre"));
 
         // Apellidos
-        btnApellidos.setOnClickListener(v -> abrirDialogoEditar("Editar Apellidos", resultadoApellidos, "apellidos"));
-        resultadoApellidos.setOnClickListener(v -> abrirDialogoEditar("Editar Apellidos", resultadoApellidos, "apellidos"));
+        btnApellidos.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_apellidos), resultadoApellidos, "apellidos"));
+        resultadoApellidos.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_apellidos), resultadoApellidos, "apellidos"));
 
         // Teléfono
-        btnTelefono.setOnClickListener(v -> abrirDialogoEditar("Editar Teléfono", resultadoTelefono, "telefono"));
-        resultadoTelefono.setOnClickListener(v -> abrirDialogoEditar("Editar Teléfono", resultadoTelefono, "telefono"));
+        btnTelefono.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_telefono), resultadoTelefono, "telefono"));
+        resultadoTelefono.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_telefono), resultadoTelefono, "telefono"));
 
         // Contraseña
         btnContrasena.setOnClickListener(v -> abrirDialogoCambiarContrasena());
@@ -185,22 +185,22 @@ public class ProfileFragment extends Fragment {
                             }
 
                             if (response.isSuccessful()) {
-                                Toast.makeText(getContext(), "Foto actualizada", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.foto_ac, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getContext(), "Error al guardar foto", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.error_guardar_foto, Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<RespuestaInicio> call, Throwable t) {
                             Log.e("FOTO_DEBUG", "onFailure: " + t.getMessage());
-                            Toast.makeText(getContext(), "Sin conexión", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.sin_conexion, Toast.LENGTH_SHORT).show();
                         }
                     });
 
         } catch (Exception e) {
-            Log.e("FOTO_ERROR", "Error al procesar imagen: " + e.getMessage());
-            Toast.makeText(getContext(), "Error al procesar imagen", Toast.LENGTH_SHORT).show();
+            Log.e("FOTO_ERROR", R.string.error_imagen + e.getMessage());
+            Toast.makeText(getContext(), R.string.error_imagen, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -229,7 +229,7 @@ public class ProfileFragment extends Fragment {
             avatar.setImageBitmap(bitmap);
             avatar.setPadding(0, 0, 0, 0);
         } catch (Exception e) {
-            Log.e("FOTO_ERROR", "Error al cargar imagen: " + e.getMessage());
+            Log.e("FOTO_ERROR", R.string.error_cargar_imagen + e.getMessage());
         }
     }
 
@@ -265,14 +265,14 @@ public class ProfileFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<RespuestaInicio> call, Throwable t) {
-                        Log.e("PROFILE_ERROR", "Error al cargar perfil: " + t.getMessage());
+                        Log.e("PROFILE_ERROR", R.string.error_cargar_perfil + t.getMessage());
                     }
                 });
     }
 
     private void abrirDialogoEditar(String titulo, TextView resultadoTextView, String campo) {
         if (idUsuarioLogueado == -1) {
-            Toast.makeText(getContext(), "Error: Sesión no válida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.sesion_invalida, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -288,12 +288,12 @@ public class ProfileFragment extends Fragment {
         }
 
         builder.setView(ventanaTexto);
-        builder.setPositiveButton("Guardar", (dialog, which) -> {
+        builder.setPositiveButton(R.string.guardar, (dialog, which) -> {
             String nuevoTexto = ventanaTexto.getText().toString().trim();
             actualizarCampoEnServidor(campo, nuevoTexto, resultadoTextView);
         });
 
-        builder.setNegativeButton("Cancelar", null);
+        builder.setNegativeButton(R.string.cancelar, null);
         builder.show();
     }
 
@@ -334,14 +334,14 @@ public class ProfileFragment extends Fragment {
 
                             Toast.makeText(getContext(), response.body().getMensaje(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.error_guardar, Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RespuestaInicio> call, Throwable t) {
-                        Log.e("NETWORK_ERROR", "Causa: " + t.getMessage());
-                        Toast.makeText(getContext(), "Sin conexión", Toast.LENGTH_SHORT).show();
+                        Log.e("NETWORK_ERROR", R.string.causa + t.getMessage());
+                        Toast.makeText(getContext(), R.string.sin_conexion, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -385,12 +385,12 @@ public class ProfileFragment extends Fragment {
 
     private void abrirDialogoCambiarContrasena() {
         if (idUsuarioLogueado == -1) {
-            Toast.makeText(getContext(), "Error: Sesión no válida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.sesion_invalida, Toast.LENGTH_SHORT).show();
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Cambiar Contraseña");
+        builder.setTitle(R.string.cambiar_contrasena);
 
         // Crear layout con campos
         LinearLayout layout = new LinearLayout(getContext());
@@ -398,49 +398,49 @@ public class ProfileFragment extends Fragment {
         layout.setPadding(50, 20, 50, 20);
 
         final EditText inputActual = new EditText(getContext());
-        inputActual.setHint("Contraseña actual");
+        inputActual.setHint(R.string.contrasena_actual);
         inputActual.setInputType(android.text.InputType.TYPE_CLASS_TEXT |
                 android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(inputActual);
 
         final EditText inputNueva = new EditText(getContext());
-        inputNueva.setHint("Nueva contraseña");
+        inputNueva.setHint(R.string.nueva_contrasena);
         inputNueva.setInputType(android.text.InputType.TYPE_CLASS_TEXT |
                 android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(inputNueva);
 
         final EditText inputConfirmar = new EditText(getContext());
-        inputConfirmar.setHint("Confirmar nueva contraseña");
+        inputConfirmar.setHint(R.string.confirmar_contrasena);
         inputConfirmar.setInputType(android.text.InputType.TYPE_CLASS_TEXT |
                 android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(inputConfirmar);
 
         builder.setView(layout);
 
-        builder.setPositiveButton("Cambiar", (dialog, which) -> {
+        builder.setPositiveButton(R.string.cambiar, (dialog, which) -> {
             String actual = inputActual.getText().toString();
             String nueva = inputNueva.getText().toString();
             String confirmar = inputConfirmar.getText().toString();
 
             if (actual.isEmpty() || nueva.isEmpty() || confirmar.isEmpty()) {
-                Toast.makeText(getContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.campos_obligatorios, Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (!nueva.equals(confirmar)) {
-                Toast.makeText(getContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.contrasenas_no_coinciden, Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (nueva.length() < 4) {
-                Toast.makeText(getContext(), "La contraseña debe tener al menos 4 caracteres", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.contrasena_corta, Toast.LENGTH_SHORT).show();
                 return;
             }
 
             cambiarContrasenaEnServidor(actual, nueva);
         });
 
-        builder.setNegativeButton("Cancelar", null);
+        builder.setNegativeButton(R.string.cancelar, null);
         builder.show();
     }
 
@@ -454,14 +454,14 @@ public class ProfileFragment extends Fragment {
                         if (response.isSuccessful() && response.body() != null) {
                             Toast.makeText(getContext(), response.body().getMensaje(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getContext(), "La contraseña actual es incorrecta", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.contrasena_actual_incorrecta, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RespuestaInicio> call, Throwable t) {
-                        Log.e("NETWORK_ERROR", "Causa: " + t.getMessage());
-                        Toast.makeText(getContext(), "Sin conexión", Toast.LENGTH_SHORT).show();
+                        Log.e("NETWORK_ERROR", R.string.causa + t.getMessage());
+                        Toast.makeText(getContext(), R.string.sin_conexion, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
