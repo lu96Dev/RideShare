@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,7 +65,21 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+// Importante: R.id.main debe ser el ID del layout raíz de tu activity_chat.xml
+        View mainLayout = findViewById(R.id.chat);
 
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, insets) -> {
+            // Obtenemos el espacio que ocupa el teclado (IME)
+            Insets keyboardInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+            // Obtenemos el espacio de las barras del sistema (navegación y estado)
+            Insets systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            // Aplicamos un padding inferior al layout igual a la altura del teclado
+            // Si el teclado está cerrado, keyboardInsets.bottom será 0.
+            v.setPadding(systemBarsInsets.left, systemBarsInsets.top, systemBarsInsets.right, keyboardInsets.bottom);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
         recycler          = findViewById(R.id.recyclerMensajes);
         input             = findViewById(R.id.editMensaje);
         btnEnviar         = findViewById(R.id.btnEnviar);

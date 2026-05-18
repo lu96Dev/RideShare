@@ -58,8 +58,7 @@
         android:gravity="center"
         android:hint="Contraseña"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        android:inputType="textPassword" app:layout_constraintEnd_toEndOf="parent"        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textoLogin2" />
 

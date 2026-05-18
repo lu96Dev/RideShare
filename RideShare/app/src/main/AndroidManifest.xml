@@ -17,6 +17,7 @@
 
         <!-- ACTIVITIES -->
         <activity android:name=".ui.activities.ChatActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 
         <activity
