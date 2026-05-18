@@ -5,95 +5,100 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_azul"
-    tools:context=".LoginActivity">
+    android:background="@drawable/pantalla_login"
+    tools:context=".ui.activities.LoginActivity">
 
     <TextView
         android:id="@+id/textoLogin1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="20dp"
         android:text="Introduce tu correo: "
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagenLogoLogin"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintHorizontal_chainStyle="packed"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imagenLogoLogin" />
 
     <EditText
         android:id="@+id/editTextCorreoLogin"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/caja_redonda"
+        android:gravity="center"
         android:hint="Correo"
         android:textColor="@color/black"
-        android:background="@drawable/caja_redonda"
-        android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/textoLogin1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/textoLogin1" />
 
     <TextView
         android:id="@+id/textoLogin2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:text="Introduce tu contraseña: "
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextCorreoLogin" />
 
     <EditText
         android:id="@+id/editTextContraseniaLogin"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/caja_redonda"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:hint="Contraseña"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textoLogin2" />
+
 
     <TextView
         android:id="@+id/textoLogoLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="RideShare"
-        android:textSize="20dp"
         android:textColor="@color/white"
+        android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@id/imagenLogoLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <Button
         android:id="@+id/botonLoginLogin"
         android:layout_width="230dp"
         android:layout_height="53dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="212dp"
         android:background="@drawable/boton_gradiante"
-        android:textSize="16dp"
         android:text="Iniciar Sesión"
+        android:textSize="16dp"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imagenLogoLogin" />
 
     <ImageView
         android:id="@+id/imagenLogoLogin"
-        android:layout_width="187dp"
-        android:layout_height="222dp"
+        android:layout_width="239dp"
+        android:layout_height="254dp"
         android:src="@drawable/rideshare"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141" />
+        app:layout_constraintVertical_bias="0.142" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
