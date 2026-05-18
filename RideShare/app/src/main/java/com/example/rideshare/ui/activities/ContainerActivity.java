@@ -49,7 +49,12 @@ public class ContainerActivity extends AppCompatActivity {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(this, fragments);
         viewPager.setAdapter(adapter);
 
-        String[] nombres = {"Buscar", "Perfil", "Chat", "Publicar"};
+        String[] nombres = {
+                getString(R.string.buscar),
+                getString(R.string.perfil),
+                getString(R.string.chat),
+                getString(R.string.publicar)
+        };
         int[] iconos = {
                 R.drawable.icon_buscar,
                 R.drawable.icon_perfil,

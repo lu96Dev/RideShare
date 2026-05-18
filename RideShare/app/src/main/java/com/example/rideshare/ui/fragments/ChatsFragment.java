@@ -60,21 +60,21 @@ public class ChatsFragment extends Fragment {
 
         deleteListener = (chat, position) -> {
             new androidx.appcompat.app.AlertDialog.Builder(getContext())
-                    .setTitle("Eliminar chat")
-                    .setMessage("¿Quieres eliminar este chat? Se borrará para ambos usuarios.")
-                    .setPositiveButton("Eliminar", (dialog, which) -> borrarChat(chat.getChatId(), position))
-                    .setNegativeButton("Cancelar", (dialog, which) -> adapter.notifyItemChanged(position))
+                    .setTitle(R.string.eliminar_chat)
+                    .setMessage(R.string.eliminar_paraambos_usuarios)
+                    .setPositiveButton(R.string.eliminar, (dialog, which) -> borrarChat(chat.getChatId(), position))
+                    .setNegativeButton(R.string.cancelar, (dialog, which) -> adapter.notifyItemChanged(position))
                     .show();
         };
 
         adapter = new ChatListAdapter(listaChats, usuarioId, getContext(), (chat, position) -> {
             new androidx.appcompat.app.AlertDialog.Builder(getContext())
-                    .setTitle("Eliminar chat")
-                    .setMessage("¿Quieres eliminar este chat? Se borrará para ambos usuarios.")
-                    .setPositiveButton("Eliminar", (dialog, which) -> {
+                    .setTitle(R.string.eliminar_chat)
+                    .setMessage(R.string.eliminar_paraambos_usuarios)
+                    .setPositiveButton(R.string.eliminar, (dialog, which) -> {
                         borrarChat(chat.getChatId(), position);
                     })
-                    .setNegativeButton("Cancelar", (dialog, which) -> {
+                    .setNegativeButton(R.string.cancelar, (dialog, which) -> {
                         // Restaurar la card visualmente si cancela
                         adapter.notifyItemChanged(position);
                     })
@@ -136,7 +136,7 @@ public class ChatsFragment extends Fragment {
             @Override
             public void onFailure(Call<List<ChatPreview>> call, Throwable t) {
                 txtVacio.setVisibility(View.VISIBLE);
-                txtVacio.setText("Error cargando chats");
+                txtVacio.setText(R.string.error_cargarchat);
             }
         });
     }
@@ -151,14 +151,14 @@ public class ChatsFragment extends Fragment {
                         txtVacio.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    Toast.makeText(getContext(), "Error al eliminar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.error_eliminar, Toast.LENGTH_SHORT).show();
                     adapter.notifyItemChanged(position); // restaura la card
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getContext(), "Sin conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.sin_conexion, Toast.LENGTH_SHORT).show();
                 adapter.notifyItemChanged(position);
             }
         });
