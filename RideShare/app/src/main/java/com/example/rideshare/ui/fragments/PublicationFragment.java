@@ -100,11 +100,11 @@ public class PublicationFragment extends Fragment {
         String strComentario = etComentario.getText().toString().trim();
 
         if (strOrigen.isEmpty() || origenLat == null || origenLng == null) {
-            Toast.makeText(getContext(), "Toca para abrir el mapa y elegir salida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.mapa_salida, Toast.LENGTH_SHORT).show();
             return;
         }
         if (strHora.isEmpty()) {
-            Toast.makeText(getContext(), "Por favor, elige una hora", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.elige_hora, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -123,7 +123,7 @@ public class PublicationFragment extends Fragment {
         int usuarioId = preferences.getInt("id_usuario", -1);
 
         if (usuarioId == -1) {
-            Toast.makeText(getContext(), "Error: No se encontró el usuario. Vuelve a iniciar sesión.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.error_usuario, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -132,18 +132,18 @@ public class PublicationFragment extends Fragment {
             @Override
             public void onResponse(Call<RespuestaTrayecto> call, Response<RespuestaTrayecto> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "¡Viaje publicado!", Toast.LENGTH_SHORT).show();
-                    tvDireccion.setText("Toca para abrir el mapa");
+                    Toast.makeText(getContext(), R.string.publicar_viaje_ok, Toast.LENGTH_SHORT).show();
+                    tvDireccion.setText(R.string.tocar_abrir_mapa);
                     etHora.setText("");
                     etComentario.setText("");
                     origenLat = null; origenLng = null; strOrigen = "";
                 } else {
-                    Toast.makeText(getContext(), "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.error+ response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<RespuestaTrayecto> call, Throwable t) {
-                Toast.makeText(getContext(), "Error red: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.error_red + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

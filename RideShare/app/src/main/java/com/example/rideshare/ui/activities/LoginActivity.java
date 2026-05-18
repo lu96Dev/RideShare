@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (!valido) return;
 
                 botonLogin.setEnabled(false);
-                botonLogin.setText("Cargando...");
+                botonLogin.setText(R.string.cargando);
 
                 SolicitudInicio solicitudInicio = new SolicitudInicio(correo, contrasenia);
                 AuthAPI authAPI = RetrofitCliente.getClient().create(AuthAPI.class);
@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<RespuestaInicio> call, Response<RespuestaInicio> response) {
                         botonLogin.setEnabled(true);
-                        botonLogin.setText("Iniciar sesión");
+                        botonLogin.setText(R.string.iniciar_sesion);
 
                         if (response.isSuccessful() && response.body() != null) {
                             RespuestaInicio respuesta = response.body();
@@ -94,14 +94,14 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, respuesta.getMensaje(), Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(LoginActivity.this, "Credenciales incorrectas.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.credenciales_incorrectas, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RespuestaInicio> call, Throwable throwable) {
                         botonLogin.setEnabled(true);
-                        botonLogin.setText("Iniciar sesión");
+                        botonLogin.setText(R.string.iniciar_sesion);
                         Toast.makeText(LoginActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
                     }
                 });

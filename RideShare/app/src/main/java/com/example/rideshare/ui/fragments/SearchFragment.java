@@ -78,7 +78,7 @@ public class SearchFragment extends Fragment {
 
     private void buscarViajesEnRadio() {
         if (origenLat == null || origenLng == null) {
-            Toast.makeText(getContext(), "Selecciona un punto en el mapa", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.selecciona_punto, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -120,7 +120,7 @@ public class SearchFragment extends Fragment {
                     }
 
                     if (filtrados.isEmpty()) {
-                        Toast.makeText(getContext(), "No hay viajes en ese radio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.no_viajes_radio, Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -130,14 +130,14 @@ public class SearchFragment extends Fragment {
                     startActivity(intent);
 
                 } else {
-                    Toast.makeText(getContext(), "No se encontraron viajes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.no_viajes, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Trip>> call, Throwable t) {
                 Log.e("API_ERROR", t != null ? t.getMessage() : "Error desconocido");
-                Toast.makeText(getContext(), "Error de red", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_red, Toast.LENGTH_SHORT).show();
             }
         });
     }
