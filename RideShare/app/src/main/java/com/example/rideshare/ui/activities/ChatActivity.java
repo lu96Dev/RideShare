@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +38,6 @@ public class ChatActivity extends AppCompatActivity {
     private EditText input;
     private ImageButton btnEnviar;
 
-    // Header
     private TextView tvHeaderNombre;
     private TextView tvHeaderIniciales;
     private ImageView ivHeaderAvatar;
@@ -48,31 +50,51 @@ public class ChatActivity extends AppCompatActivity {
     private int chatId;
     private int otroUsuarioId;
 
+    // Polling
+    private final android.os.Handler pollingHandler = new android.os.Handler();
+    private static final int POLLING_INTERVAL_MS = 4000;
+    private final Runnable pollingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            cargarMensajes();
+            pollingHandler.postDelayed(this, POLLING_INTERVAL_MS);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+// Importante: R.id.main debe ser el ID del layout raíz de tu activity_chat.xml
+        View mainLayout = findViewById(R.id.chat);
 
-        // Vistas
-        recycler         = findViewById(R.id.recyclerMensajes);
-        input            = findViewById(R.id.editMensaje);
-        btnEnviar        = findViewById(R.id.btnEnviar);
-        tvHeaderNombre   = findViewById(R.id.tvHeaderNombre);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, insets) -> {
+            // Obtenemos el espacio que ocupa el teclado (IME)
+            Insets keyboardInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+            // Obtenemos el espacio de las barras del sistema (navegación y estado)
+            Insets systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            // Aplicamos un padding inferior al layout igual a la altura del teclado
+            // Si el teclado está cerrado, keyboardInsets.bottom será 0.
+            v.setPadding(systemBarsInsets.left, systemBarsInsets.top, systemBarsInsets.right, keyboardInsets.bottom);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+        recycler          = findViewById(R.id.recyclerMensajes);
+        input             = findViewById(R.id.editMensaje);
+        btnEnviar         = findViewById(R.id.btnEnviar);
+        tvHeaderNombre    = findViewById(R.id.tvHeaderNombre);
         tvHeaderIniciales = findViewById(R.id.tvHeaderIniciales);
-        ivHeaderAvatar   = findViewById(R.id.ivHeaderAvatar);
+        ivHeaderAvatar    = findViewById(R.id.ivHeaderAvatar);
         ImageButton btnBack = findViewById(R.id.btnBack);
 
-        // Sesión
         SharedPreferences prefs = getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE);
         usuarioId = prefs.getInt("id_usuario", -1);
 
-        // Intent extras
         chatId        = getIntent().getIntExtra("chatId", -1);
         otroUsuarioId = getIntent().getIntExtra("otroUsuarioId", -1);
-        String nombre    = getIntent().getStringExtra("nombre");
+        String nombre     = getIntent().getStringExtra("nombre");
         String fotoPerfil = getIntent().getStringExtra("fotoPerfil");
-
-        Log.d(TAG, "chatId: " + chatId + " | usuarioId: " + usuarioId);
 
         if (chatId == -1 || usuarioId == -1) {
             Toast.makeText(this, "Error: sesión o chat inválido", Toast.LENGTH_SHORT).show();
@@ -80,12 +102,9 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
-        // — Header —
         btnBack.setOnClickListener(v -> finish());
 
-        if (nombre == null || nombre.isEmpty()) {
-            nombre = "Usuario " + otroUsuarioId;
-        }
+        if (nombre == null || nombre.isEmpty()) nombre = "Usuario " + otroUsuarioId;
         tvHeaderNombre.setText(nombre);
 
         if (fotoPerfil != null && !fotoPerfil.isEmpty()) {
@@ -101,7 +120,6 @@ public class ChatActivity extends AppCompatActivity {
             tvHeaderIniciales.setText(obtenerIniciales(nombre));
         }
 
-        // — RecyclerView —
         api = RetrofitCliente.getClient().create(MensajeAPI.class);
         adapter = new MensajeAdapter(getLayoutInflater(), mensajes, usuarioId);
 
@@ -110,17 +128,30 @@ public class ChatActivity extends AppCompatActivity {
         recycler.setLayoutManager(lm);
         recycler.setAdapter(adapter);
 
-        cargarMensajes();
         marcarLeidos();
 
-        // — Enviar —
         btnEnviar.setOnClickListener(v -> enviarMensaje());
 
-        // Enviar también con el botón "Send" del teclado
         input.setOnEditorActionListener((v, actionId, event) -> {
-            enviarMensaje();
-            return true;
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEND
+                    || actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                enviarMensaje();
+                return true;
+            }
+            return false;
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        pollingHandler.post(pollingRunnable); // arranca el polling
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pollingHandler.removeCallbacks(pollingRunnable); // para el polling
     }
 
     private void cargarMensajes() {
@@ -134,15 +165,12 @@ public class ChatActivity extends AppCompatActivity {
                     if (!mensajes.isEmpty()) {
                         recycler.scrollToPosition(mensajes.size() - 1);
                     }
-                } else {
-                    Log.e(TAG, "Error HTTP: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Mensaje>> call, Throwable t) {
                 Log.e(TAG, "Error de red: " + t.getMessage());
-                Toast.makeText(ChatActivity.this, "Error cargando mensajes", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -150,6 +178,8 @@ public class ChatActivity extends AppCompatActivity {
     private void enviarMensaje() {
         String texto = input.getText().toString().trim();
         if (texto.isEmpty()) return;
+
+        input.setText(""); // limpiar inmediatamente para evitar doble envío
 
         Mensaje m = new Mensaje();
         m.setChatId(chatId);
@@ -159,11 +189,8 @@ public class ChatActivity extends AppCompatActivity {
         api.enviarMensaje(m).enqueue(new Callback<Mensaje>() {
             @Override
             public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    mensajes.add(response.body());
-                    adapter.notifyItemInserted(mensajes.size() - 1);
-                    recycler.scrollToPosition(mensajes.size() - 1);
-                    input.setText("");
+                if (response.isSuccessful()) {
+                    cargarMensajes(); // recarga desde el servidor
                 } else {
                     Log.e(TAG, "Error al enviar: " + response.code());
                     Toast.makeText(ChatActivity.this, "Error al enviar", Toast.LENGTH_SHORT).show();
@@ -181,23 +208,11 @@ public class ChatActivity extends AppCompatActivity {
     private void marcarLeidos() {
         api.marcarLeidos(chatId, usuarioId).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d(TAG, "Mensajes marcados como leídos");
-            }
+            public void onResponse(Call<Void> call, Response<Void> response) {}
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.d(TAG, "Error marcando leídos: " + t.getMessage());
-            }
+            public void onFailure(Call<Void> call, Throwable t) {}
         });
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        cargarMensajes();
-    }
-
-    // — Helpers —
 
     private Bitmap base64ToBitmap(String base64) {
         try {

@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rideshare.R;
+import com.example.rideshare.data.dto.RespuestaInicio;
 import com.example.rideshare.data.network.ChatAPI;
 import com.example.rideshare.data.network.RetrofitCliente;
 import com.example.rideshare.model.Chat;
@@ -52,6 +53,18 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
                         (viajeActual.getApellidos() != null ? viajeActual.getApellidos() : "")
         ).trim();
 
+        final String nombreCompletoFinal = nombreCompleto;
+
+        // Obtener el id del usuario actual
+        int usuarioActualId = holder.itemView.getContext()
+                .getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE)
+                .getInt("id_usuario", -1);
+
+        // Si el trayecto pertenece al usuario actual, se añade "(Tú)"
+        if (viajeActual.getConductorId() == usuarioActualId) {
+            nombreCompleto = nombreCompleto + " (Tú)";
+        }
+
         holder.tvNombre.setText(nombreCompleto.isEmpty() ? "Anónimo" : nombreCompleto);
 
         String desc = viajeActual.getDescripcion();
@@ -66,7 +79,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
 
         holder.tvHora.setText(
                 viajeActual.getHora() != null
-                        ? "Salida a las " + viajeActual.getHora()
+                        ? "Salida a las " + viajeActual.getHora().substring(0, 5)
                         : ""
         );
 
@@ -80,11 +93,13 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
 
             Context context = v.getContext();
 
-            int usuarioActualId = context
-                    .getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE)
-                    .getInt("id_usuario", -1);
-
             int otroUsuarioId = viajeActual.getConductorId();
+
+            // Si el trayecto es del propio usuario, no hace nada
+            if (otroUsuarioId == usuarioActualId) {
+                Toast.makeText(context, "No puedes chatear contigo mismo", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             if (usuarioActualId == -1 || otroUsuarioId == -1) {
                 Toast.makeText(context, "Error de usuario", Toast.LENGTH_SHORT).show();
@@ -115,6 +130,8 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
                         Intent intent = new Intent(context, ChatActivity.class);
                         intent.putExtra("chatId", chat.getId());
                         intent.putExtra("otroUsuarioId", otroUsuarioId);
+                        intent.putExtra("nombre", nombreCompletoFinal);
+                        intent.putExtra("fotoPerfil", holder.fotoConductorBase64);
 
                         context.startActivity(intent);
 
@@ -136,6 +153,9 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
                 }
             });
         });
+
+        cargarFotoConductor(holder, viajeActual.getConductorId());
+
     }
 
     @Override
@@ -147,6 +167,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
 
         TextView tvNombre, tvTiempo, tvDescripcion, tvHora, tvDistancia;
         ImageView ivPerfil, ivChat;
+        String fotoConductorBase64;
 
         public ViajeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -159,4 +180,42 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
             ivChat = itemView.findViewById(R.id.ivIconoChat);
         }
     }
+
+    private void cargarFotoConductor(ViajeViewHolder holder, int conductorId) {
+        if (conductorId == -1) return;
+
+        // Limpiar foto anterior mientras carga (evita que aparezca la de otra card)
+        //holder.ivPerfil.setImageResource(R.drawable.);
+
+        RetrofitCliente.getUsuarioAPI().obtenerUsuario(conductorId)
+                .enqueue(new Callback<RespuestaInicio>() {
+                    @Override
+                    public void onResponse(Call<RespuestaInicio> call, Response<RespuestaInicio> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            String base64 = response.body().getFotoPerfil();
+                            holder.fotoConductorBase64 = base64;
+                            cargarImagenDesdeBase64(holder.ivPerfil, base64);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RespuestaInicio> call, Throwable t) {
+                        // Mantiene el placeholder, no hace falta hacer nada
+                    }
+                });
+    }
+
+    private void cargarImagenDesdeBase64(ImageView imageView, String base64) {
+        if (base64 == null || base64.isEmpty()) return;
+
+        try {
+            byte[] bytes = android.util.Base64.decode(base64, android.util.Base64.DEFAULT);
+            android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            imageView.setImageBitmap(bitmap);
+            imageView.setPadding(0, 0, 0, 0);
+        } catch (Exception e) {
+            android.util.Log.e("FOTO_ERROR", "Error al cargar imagen: " + e.getMessage());
+        }
+    }
+
 }

@@ -31,9 +31,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     private final List<ChatPreview> lista;
     private final Context context;
 
-    public ChatListAdapter(List<ChatPreview> lista, int usuarioId, Context context) {
+    private final OnChatDeleteListener deleteListener;
+
+    public ChatListAdapter(List<ChatPreview> lista, int usuarioId, Context context, OnChatDeleteListener deleteListener) {
         this.lista = lista;
         this.context = context;
+        this.deleteListener = deleteListener;
     }
 
     @NonNull
@@ -143,5 +146,15 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             tvUltimo    = itemView.findViewById(R.id.tvUltimoMensaje);
             tvBadge     = itemView.findViewById(R.id.tvBadge);
         }
+    }
+
+    public void notifyDelete(int position) {
+        lista.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public interface OnChatDeleteListener {
+        void onDelete(ChatPreview chat, int position);
+
     }
 }

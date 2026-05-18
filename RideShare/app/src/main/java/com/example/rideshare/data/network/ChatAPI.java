@@ -16,4 +16,7 @@ public interface ChatAPI {
 
     @GET("api/chats/{usuarioId}")
     Call<List<ChatPreview>> obtenerChats(@Path("usuarioId") int usuarioId);
+
+    @DELETE("api/chats/{chatId}")
+    Call<Void> eliminarChat(@Path("chatId") int chatId);
 }
