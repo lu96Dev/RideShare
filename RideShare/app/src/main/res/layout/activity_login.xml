@@ -58,10 +58,12 @@
         android:gravity="center"
         android:hint="@string/contrasena"
         android:textColor="@color/black"
-        android:inputType="textPassword" app:layout_constraintEnd_toEndOf="parent"        app:layout_constraintHorizontal_bias="0.495"
+        android:inputType="textPassword"
+        android:longClickable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textoLogin2" />
-
 
     <TextView
         android:id="@+id/textoLogoLogin"

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,10 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    // Variables privadas para guardar las contraseñas reales que se van escribiendo
+    private final StringBuilder contraseñaReal = new StringBuilder();
+    private final StringBuilder repetirContraseñaReal = new StringBuilder();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +45,65 @@ public class RegisterActivity extends AppCompatActivity {
         EditText editPassword2 = findViewById(R.id.editTextRepetirContraseñaRegister);
         Button botonRegistro = findViewById(R.id.botonRegisterMain);
 
+        // --- SOLUCIÓN DEFINITIVA: FILTRO DE INTERCEPCIÓN EN TIEMPO REAL ---
+
+        // Filtro para el primer campo de contraseña
+        editPassword.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                // Si el usuario está borrando caracteres
+                if (end - start == 0) {
+                    if (contraseñaReal.length() > 0 && dstart < contraseñaReal.length()) {
+                        contraseñaReal.delete(dstart, dend);
+                    }
+                    return null;
+                }
+
+                // Guardamos el carácter real en nuestra variable oculta
+                for (int i = start; i < end; i++) {
+                    contraseñaReal.insert(dstart + (i - start), source.charAt(i));
+                }
+
+                // Devolvemos puntos de inmediato a la pantalla. Multiplicamos el punto por los caracteres introducidos
+                StringBuilder puntos = new StringBuilder();
+                for (int i = start; i < end; i++) {
+                    puntos.append("●");
+                }
+                return puntos.toString();
+            }
+        }});
+
+        // Filtro para el segundo campo de contraseña (Repetir)
+        editPassword2.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if (end - start == 0) {
+                    if (repetirContraseñaReal.length() > 0 && dstart < repetirContraseñaReal.length()) {
+                        repetirContraseñaReal.delete(dstart, dend);
+                    }
+                    return null;
+                }
+                for (int i = start; i < end; i++) {
+                    repetirContraseñaReal.insert(dstart + (i - start), source.charAt(i));
+                }
+                StringBuilder puntos = new StringBuilder();
+                for (int i = start; i < end; i++) {
+                    puntos.append("●");
+                }
+                return puntos.toString();
+            }
+        }});
+        // -----------------------------------------------------------------
+
         botonRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String email = editCorreo.getText().toString().trim();
-                String password = editPassword.getText().toString().trim();
-                String password2 = editPassword2.getText().toString().trim();
+
+                // OJO: Ahora leemos de nuestras variables ocultas, no del EditText directamente
+                String password = contraseñaReal.toString().trim();
+                String password2 = repetirContraseñaReal.toString().trim();
 
                 boolean valido = true;
 
@@ -71,7 +130,6 @@ public class RegisterActivity extends AppCompatActivity {
                     editPassword2.setError("Repite la contraseña");
                     valido = false;
                 }
-
 
                 if (!password.equals(password2)) {
                     editPassword2.setError("Las contraseñas no coinciden");
