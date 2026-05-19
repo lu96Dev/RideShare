@@ -125,26 +125,81 @@ public class ProfileFragment extends Fragment {
     }
 
     private void configurarListeners() {
+
         avatar.setOnClickListener(v -> getContent.launch("image/*"));
 
         // Biografía
-        btnBiblio.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_bio), resultadoBiblio, "biografia"));
-        resultadoBiblio.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_bio), resultadoBiblio, "biografia"));
+        btnBiblio.setOnClickListener(v ->
+                abrirDialogoEditar(
+                        getString(R.string.editar_bio),
+                        resultadoBiblio,
+                        "biografia"
+                )
+        );
+
+        resultadoBiblio.setOnClickListener(v ->
+                abrirDialogoEditar(
+                        getString(R.string.editar_bio),
+                        resultadoBiblio,
+                        "biografia"
+                )
+        );
 
         // Nombre
-        btnNombre.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_nombre), resultadoNombre, "nombre"));
-        resultadoNombre.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_nombre), resultadoNombre, "nombre"));
+        btnNombre.setOnClickListener(v ->
+                abrirDialogoEditar(
+                        getString(R.string.editar_nombre),
+                        resultadoNombre,
+                        "nombre"
+                )
+        );
+
+        resultadoNombre.setOnClickListener(v ->
+                abrirDialogoEditar(
+                        getString(R.string.editar_nombre),
+                        resultadoNombre,
+                        "nombre"
+                )
+        );
 
         // Apellidos
-        btnApellidos.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_apellidos), resultadoApellidos, "apellidos"));
-        resultadoApellidos.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_apellidos), resultadoApellidos, "apellidos"));
+        btnApellidos.setOnClickListener(v ->
+                abrirDialogoEditar(
+                        getString(R.string.editar_apellidos),
+                        resultadoApellidos,
+                        "apellidos"
+                )
+        );
+
+        resultadoApellidos.setOnClickListener(v ->
+                abrirDialogoEditar(
+                        getString(R.string.editar_apellidos),
+                        resultadoApellidos,
+                        "apellidos"
+                )
+        );
 
         // Teléfono
-        btnTelefono.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_telefono), resultadoTelefono, "telefono"));
-        resultadoTelefono.setOnClickListener(v -> abrirDialogoEditar(String.valueOf(R.string.editar_telefono), resultadoTelefono, "telefono"));
+        btnTelefono.setOnClickListener(v ->
+                abrirDialogoEditar(
+                        getString(R.string.editar_telefono),
+                        resultadoTelefono,
+                        "telefono"
+                )
+        );
+
+        resultadoTelefono.setOnClickListener(v ->
+                abrirDialogoEditar(
+                        getString(R.string.editar_telefono),
+                        resultadoTelefono,
+                        "telefono"
+                )
+        );
 
         // Contraseña
-        btnContrasena.setOnClickListener(v -> abrirDialogoCambiarContrasena());
+        btnContrasena.setOnClickListener(v ->
+                abrirDialogoCambiarContrasena()
+        );
     }
 
     // ★ NUEVO METODO - Convertir imagen a Base64 y guardar
