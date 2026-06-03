@@ -109,7 +109,6 @@ public class SearchFragment extends Fragment {
 
                             float km = miUbicacion.distanceTo(ubicacionViaje) / 1000;
 
-                            // 🔥 FILTRO REAL POR RADIO
                             if (km <= RADIO_BUSQUEDA_KM) {
                                 viaje.setDistancia(
                                         String.format(Locale.getDefault(), "%.1f", km)
@@ -123,8 +122,6 @@ public class SearchFragment extends Fragment {
                         Toast.makeText(getContext(), R.string.no_viajes_radio, Toast.LENGTH_SHORT).show();
                         return;
                     }
-
-                    // 🚀 Lanzamos Activity con SOLO los filtrados
                     Intent intent = new Intent(getContext(), TripsActivity.class);
                     intent.putExtra("TRIPS", new ArrayList<>(filtrados));
                     startActivity(intent);

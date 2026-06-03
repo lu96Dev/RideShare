@@ -69,8 +69,6 @@ public class ContainerActivity extends AppCompatActivity {
                 }
         ).attach();
     }
-
-    // Método para cambiar a la pestaña de chat
     public void irAlChat() {
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         if (viewPager != null) {

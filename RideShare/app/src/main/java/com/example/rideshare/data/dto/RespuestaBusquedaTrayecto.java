@@ -8,7 +8,6 @@ public class RespuestaBusquedaTrayecto {
     private String mensaje;
     private List<Trip> trayectosEncontrados;
 
-    // Getters y Setters
     public boolean isExito() { return exito; }
     public void setExito(boolean exito) { this.exito = exito; }
 

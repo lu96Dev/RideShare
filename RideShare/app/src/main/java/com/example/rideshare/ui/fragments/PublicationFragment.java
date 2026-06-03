@@ -43,7 +43,6 @@ public class PublicationFragment extends Fragment {
     private Double origenLat = null;
     private Double origenLng = null;
 
-    // Recibe los datos de vuelta cuando el usuario cierra el mapa en pantalla completa
     private final ActivityResultLauncher<Intent> abrirMapaPantallaCompleta = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -52,8 +51,6 @@ public class PublicationFragment extends Fragment {
                     origenLat = data.getDoubleExtra("LATITUD", 0);
                     origenLng = data.getDoubleExtra("LONGITUD", 0);
                     strOrigen = data.getStringExtra("CALLE");
-
-                    // Mostramos la calle elegida en el cuadradito
                     tvDireccion.setText(strOrigen);
                 }
             });
@@ -68,18 +65,13 @@ public class PublicationFragment extends Fragment {
         etHora = view.findViewById(R.id.hora);
         etComentario = view.findViewById(R.id.comentario);
         btnPublicar = view.findViewById(R.id.btnContinuar);
-
-        // Al tocar la dirección, abrimos el mapa en grande
         tvDireccion.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), MapaPantallaCompletaActivity.class);
             abrirMapaPantallaCompleta.launch(intent);
         });
 
-        // Reloj
         etHora.setFocusable(false);
         etHora.setOnClickListener(v -> abrirSelectorDeHora());
-
-        // Botón Publicar
         btnPublicar.setOnClickListener(v -> publicarViaje());
 
         return view;
@@ -118,7 +110,6 @@ public class PublicationFragment extends Fragment {
                 strOrigen, origenLat, origenLng, destinoFijo, fechaHoy, strHora, strComentario
         );
 
-        // OBTENER ID
         SharedPreferences preferences = requireActivity().getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE);
         int usuarioId = preferences.getInt("id_usuario", -1);
 

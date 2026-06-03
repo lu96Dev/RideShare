@@ -32,10 +32,6 @@ public class Trip implements Serializable {
     @SerializedName("distancia")
     private String distancia;
 
-    // =====================
-    // GETTERS
-    // =====================
-
     public Integer getId() {
         return id;
     }
@@ -75,19 +71,9 @@ public class Trip implements Serializable {
     public Double getLongitud() {
         return longitud;
     }
-
-    // =====================
-    // SETTERS
-    // =====================
-
     public void setDistancia(String distancia) {
         this.distancia = distancia;
     }
-
-    // =====================
-    // CLASE INTERNA
-    // =====================
-
     public static class Conductor implements Serializable {
         public String nombre;
         public String apellidos;

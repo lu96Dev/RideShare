@@ -42,11 +42,9 @@ public class LoginActivity extends AppCompatActivity {
         EditText editContrasenia = findViewById(R.id.editTextContraseniaLogin);
         Button botonLogin = findViewById(R.id.botonLoginLogin);
 
-        // --- SOLUCIÓN DEFINITIVA: FILTRO DE INTERCEPCIÓN EN TIEMPO REAL (NUEVO) ---
         editContrasenia.setFilters(new InputFilter[]{new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                // Si el usuario está borrando caracteres con el teclado
                 if (end - start == 0) {
                     if (contraseniaReal.length() > 0 && dstart < contraseniaReal.length()) {
                         contraseniaReal.delete(dstart, dend);
@@ -54,12 +52,10 @@ public class LoginActivity extends AppCompatActivity {
                     return null;
                 }
 
-                // Almacenamos los caracteres reales en la variable oculta antes de que toquen la pantalla
                 for (int i = start; i < end; i++) {
                     contraseniaReal.insert(dstart + (i - start), source.charAt(i));
                 }
 
-                // Devolvemos círculos negros puros de forma instantánea
                 StringBuilder puntos = new StringBuilder();
                 for (int i = start; i < end; i++) {
                     puntos.append("●");
@@ -67,14 +63,12 @@ public class LoginActivity extends AppCompatActivity {
                 return puntos.toString();
             }
         }});
-        // -------------------------------------------------------------------------
 
         botonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String correo = editCorreo.getText().toString().trim();
 
-                // OJO: Cambiado para leer desde el StringBuilder que guarda la clave real
                 String contrasenia = contraseniaReal.toString().trim();
 
                 boolean valido = true;
@@ -113,12 +107,10 @@ public class LoginActivity extends AppCompatActivity {
                             RespuestaInicio respuesta = response.body();
 
                             if (respuesta.esCorrecto()) {
-                                // --- GUARDAR ID DE USUARIO ---
                                 SharedPreferences prefs = getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefs.edit();
                                 editor.putInt("id_usuario", respuesta.getId());
                                 editor.apply();
-                                // -----------------------------
 
                                 Toast.makeText(LoginActivity.this, respuesta.getMensaje(), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);

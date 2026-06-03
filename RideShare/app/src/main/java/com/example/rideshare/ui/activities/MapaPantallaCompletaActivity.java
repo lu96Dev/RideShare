@@ -47,7 +47,6 @@ public class MapaPantallaCompletaActivity extends AppCompatActivity implements O
 
         btnConfirmarUbicacion.setOnClickListener(v -> {
             if (latitudElegida != null && longitudElegida != null) {
-                // Preparamos los datos para enviarlos de vuelta a la pantalla de Publicar
                 Intent resultado = new Intent();
                 resultado.putExtra("LATITUD", latitudElegida);
                 resultado.putExtra("LONGITUD", longitudElegida);
@@ -64,17 +63,11 @@ public class MapaPantallaCompletaActivity extends AppCompatActivity implements O
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 
-        // ACTIVAR LOS BOTONES DE ZOOM (+ y -) EN LA PANTALLA
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        // --- SOLUCIÓN: MOVER LOS CONTROLES DEL MAPA HACIA ARRIBA ---
-        // Convertimos 90dp (lo que ocupa tu botón + margen) a píxeles de la pantalla
         int paddingBottom = (int) (90 * getResources().getDisplayMetrics().density);
-        // Le aplicamos el relleno al mapa (Izquierda, Arriba, Derecha, Abajo)
         mMap.setPadding(0, 0, 0, paddingBottom);
-        // -----------------------------------------------------------
 
-        // Centrar en Sevilla
         LatLng sevilla = new LatLng(37.3891, -5.9845);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sevilla, 13f));
 

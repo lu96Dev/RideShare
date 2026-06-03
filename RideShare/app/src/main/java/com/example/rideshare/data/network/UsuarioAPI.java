@@ -11,7 +11,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface UsuarioAPI {
-    // Apunta al @PutMapping("/{id}") de tu backend
 
     @GET("api/usuarios/{id}")
     Call<RespuestaInicio> obtenerUsuario(@Path("id") Integer id);

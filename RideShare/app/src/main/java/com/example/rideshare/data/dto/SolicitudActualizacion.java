@@ -8,15 +8,12 @@ public class SolicitudActualizacion {
     private String preferenciasViaje;
     private String fotoPerfil;
 
-    // Constructor vacío
     public SolicitudActualizacion() {}
 
-    // Constructor solo biografía (el que usas ahora)
     public SolicitudActualizacion(String biografia) {
         this.biografia = biografia;
     }
 
-    // Constructor completo para futuro uso
     public SolicitudActualizacion(String nombre, String apellidos, String telefono,
                                   String biografia, String preferenciasViaje, String fotoPerfil) {
         this.nombre = nombre;

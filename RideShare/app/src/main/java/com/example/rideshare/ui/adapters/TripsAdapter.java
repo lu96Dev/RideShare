@@ -55,12 +55,10 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
 
         final String nombreCompletoFinal = nombreCompleto;
 
-        // Obtener el id del usuario actual
         int usuarioActualId = holder.itemView.getContext()
                 .getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE)
                 .getInt("id_usuario", -1);
 
-        // Si el trayecto pertenece al usuario actual, se añade "(Tú)"
         if (viajeActual.getConductorId() == usuarioActualId) {
             nombreCompleto = nombreCompleto + " (Tú)";
         }
@@ -113,7 +111,6 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
             request.setUsuario1Id(usuarioActualId);
             request.setUsuario2Id(otroUsuarioId);
 
-            // 🔥 IMPORTANTE: evitar clicks múltiples (bug típico)
             holder.ivChat.setEnabled(false);
 
             api.crearOCrearChat(request).enqueue(new Callback<Chat>() {
@@ -184,9 +181,6 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
     private void cargarFotoConductor(ViajeViewHolder holder, int conductorId) {
         if (conductorId == -1) return;
 
-        // Limpiar foto anterior mientras carga (evita que aparezca la de otra card)
-        //holder.ivPerfil.setImageResource(R.drawable.);
-
         RetrofitCliente.getUsuarioAPI().obtenerUsuario(conductorId)
                 .enqueue(new Callback<RespuestaInicio>() {
                     @Override
@@ -200,7 +194,6 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViajeViewHol
 
                     @Override
                     public void onFailure(Call<RespuestaInicio> call, Throwable t) {
-                        // Mantiene el placeholder, no hace falta hacer nada
                     }
                 });
     }

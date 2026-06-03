@@ -20,7 +20,6 @@ public interface TrayectoAPI {
     @GET("api/trayectos")
     Call<List<RespuestaTrayecto>> listarTrayectos();
 
-    // CORRECCIÓN: Ahora espera una LISTA directa de Trips
     @POST("api/trayectos/buscar")
     Call<List<Trip>> buscarTrayectosCercanos(@Body SolicitudBusquedaTrayecto solicitud);
 }

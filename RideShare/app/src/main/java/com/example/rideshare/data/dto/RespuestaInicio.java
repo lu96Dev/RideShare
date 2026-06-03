@@ -1,12 +1,9 @@
 package com.example.rideshare.data.dto;
 
 public class RespuestaInicio {
-    // Campo para mensajes del servidor
     private String mensaje;
 
     private boolean correcto;
-
-    // Todos los campos del usuario
     private Integer id;
     private String nombre;
     private String apellidos;
@@ -20,10 +17,7 @@ public class RespuestaInicio {
     private String fechaRegistro;
     private String fechaActualizacion;
 
-    // Constructor vacío
     public RespuestaInicio() {}
-
-    // Getters y Setters
 
     public boolean esCorrecto() {
         return correcto;

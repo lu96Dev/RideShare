@@ -45,13 +45,9 @@ public class RegisterActivity extends AppCompatActivity {
         EditText editPassword2 = findViewById(R.id.editTextRepetirContraseñaRegister);
         Button botonRegistro = findViewById(R.id.botonRegisterMain);
 
-        // --- SOLUCIÓN DEFINITIVA: FILTRO DE INTERCEPCIÓN EN TIEMPO REAL ---
-
-        // Filtro para el primer campo de contraseña
         editPassword.setFilters(new InputFilter[]{new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                // Si el usuario está borrando caracteres
                 if (end - start == 0) {
                     if (contraseñaReal.length() > 0 && dstart < contraseñaReal.length()) {
                         contraseñaReal.delete(dstart, dend);
@@ -59,12 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
                     return null;
                 }
 
-                // Guardamos el carácter real en nuestra variable oculta
                 for (int i = start; i < end; i++) {
                     contraseñaReal.insert(dstart + (i - start), source.charAt(i));
                 }
 
-                // Devolvemos puntos de inmediato a la pantalla. Multiplicamos el punto por los caracteres introducidos
                 StringBuilder puntos = new StringBuilder();
                 for (int i = start; i < end; i++) {
                     puntos.append("●");
@@ -73,7 +67,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }});
 
-        // Filtro para el segundo campo de contraseña (Repetir)
         editPassword2.setFilters(new InputFilter[]{new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
@@ -93,15 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
                 return puntos.toString();
             }
         }});
-        // -----------------------------------------------------------------
 
         botonRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String email = editCorreo.getText().toString().trim();
-
-                // OJO: Ahora leemos de nuestras variables ocultas, no del EditText directamente
                 String password = contraseñaReal.toString().trim();
                 String password2 = repetirContraseñaReal.toString().trim();
 
@@ -165,13 +155,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                             if (respuesta.esCorrecto()) {
 
-                                // --- GUARDAR ID DE USUARIO ---
                                 SharedPreferences prefs = getSharedPreferences("sesion_usuario", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefs.edit();
                                 editor.putInt("id_usuario", respuesta.getId());
                                 editor.apply();
-                                // -----------------------------
-
                                 Intent intent = new Intent(RegisterActivity.this, ContainerActivity.class);
                                 startActivity(intent);
                                 finish();

@@ -9,7 +9,6 @@ public class SolicitudTrayecto {
     private String hora;
     private String descripcion;
 
-    // Constructor
     public SolicitudTrayecto(String origen, Double origenLat, Double origenLng,
                              String destino, String fecha, String hora, String descripcion) {
         this.origen = origen;
